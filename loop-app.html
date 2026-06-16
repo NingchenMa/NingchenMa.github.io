@@ -54,6 +54,10 @@
   .chip.q{background:#eef2f6;color:var(--muted);}
   .col.q .tcard{border-style:dashed;box-shadow:none;background:#f8fafc;}
   .colopen{font-size:11px;color:var(--teal);font-weight:700;}
+  .tcard{user-select:none;}
+  .tcard.dragging{opacity:.45;transform:rotate(1.5deg);}
+  .col{border-radius:12px;padding:2px;transition:background .12s,box-shadow .12s;}
+  .col.dragover{background:rgba(13,148,136,.07);box-shadow:inset 0 0 0 2px var(--teal);}
 
   /* generic list cards (skills / decisions / feed) */
   .lcard{background:#fff;border:1px solid var(--line);border-radius:12px;padding:13px 15px;margin-bottom:11px;box-shadow:0 4px 11px rgba(15,23,42,.05);max-width:720px;}
@@ -149,6 +153,7 @@ const CHIP={queued:'<span class="chip q">To do</span>',running:'<span class="chi
 function openTask(id){const t=tasks.find(x=>x.id===id);if(t&&t.status==='queued'){t.status='running';saveTasks();}location.href='loop-canvas-live.html?task='+encodeURIComponent(id);}
 
 let view='mywork';
+let dragId=null;
 function setView(v){view=v;[...document.querySelectorAll('#nav a')].forEach(a=>a.classList.toggle('on',a.dataset.v===v));render();}
 [...document.querySelectorAll('#nav a')].forEach(a=>a.onclick=()=>setView(a.dataset.v));
 
@@ -170,17 +175,23 @@ function render(){
   if(view==='feed')return renderFeed(m);
 }
 function renderBoard(m){
-  m.innerHTML='<div class="ph"><div><h2>My Work</h2><div class="sub">Your tasks — click any card to open its canvas and get started</div></div><button class="new" id="newBtn">+ New task</button></div><div class="board" id="board"></div>';
+  m.innerHTML='<div class="ph"><div><h2>My Work</h2><div class="sub">Your tasks — drag a card between columns to change its status, or click one to open its canvas</div></div><button class="new" id="newBtn">+ New task</button></div><div class="board" id="board"></div>';
   const COLS=[['queued','To do','q'],['running','In progress',''],['review','In review',''],['shipped','Merged','']];
   const b=m.querySelector('#board');
   COLS.forEach(([key,label,cls])=>{
     const items=tasks.filter(t=>t.status===key);
-    const col=document.createElement('div');col.className='col '+cls;
+    const col=document.createElement('div');col.className='col '+cls;col.dataset.status=key;
     col.innerHTML='<h5>'+label+' <span class="ct">'+items.length+'</span></h5>';
-    items.forEach(t=>{const c=document.createElement('div');c.className='tcard';c.onclick=()=>openTask(t.id);
+    items.forEach(t=>{const c=document.createElement('div');c.className='tcard';c.draggable=true;c.dataset.id=t.id;
+      c.onclick=()=>{if(!dragId)openTask(t.id);};
+      c.addEventListener('dragstart',e=>{dragId=t.id;c.classList.add('dragging');e.dataTransfer.effectAllowed='move';try{e.dataTransfer.setData('text/plain',t.id);}catch(_){}});
+      c.addEventListener('dragend',()=>{dragId=null;c.classList.remove('dragging');document.querySelectorAll('.col.dragover').forEach(x=>x.classList.remove('dragover'));});
       c.innerHTML='<div class="id">#'+esc(t.id)+'</div><div class="ti">'+esc(t.title)+'</div><div class="bot">'+CHIP[t.status]+(t.status==='running'||t.status==='review'?' · <span class="av">⬡</span> Refactor-Bot':'')+' · <span class="colopen">Open canvas →</span></div>';
       col.appendChild(c);});
     if(!items.length)col.innerHTML+='<div style="font-size:11.5px;color:var(--muted);padding:6px">—</div>';
+    col.addEventListener('dragover',e=>{e.preventDefault();e.dataTransfer.dropEffect='move';col.classList.add('dragover');});
+    col.addEventListener('dragleave',e=>{if(!col.contains(e.relatedTarget))col.classList.remove('dragover');});
+    col.addEventListener('drop',e=>{e.preventDefault();col.classList.remove('dragover');const id=dragId||(e.dataTransfer&&e.dataTransfer.getData('text/plain'));const t=tasks.find(x=>x.id===id);if(t&&t.status!==key){t.status=key;saveTasks();render();}});
     b.appendChild(col);
   });
   m.querySelector('#newBtn').onclick=()=>{const ti=prompt('New task — what do you want the agent to do?','');if(!ti||!ti.trim())return;tasks.unshift({id:'TASK-'+(400+Math.floor(Math.random()*599)),title:ti.trim(),status:'queued'});saveTasks();render();};
