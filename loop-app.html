@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -93,7 +93,7 @@
   <div class="topbar">
     <div class="logo">↻</div>
     <h1>Loop</h1>
-    <div class="search">⌕&nbsp;&nbsp;搜任务 / 决定 / 人 / skill…</div>
+    <div class="search">⌕&nbsp;&nbsp;Search tasks / decisions / people / skills…</div>
     <div class="me"><span class="av">MC</span> Maya Chen</div>
   </div>
 
@@ -106,7 +106,7 @@
         <a data-v="skills"><span class="ic">✦</span> Skills <span class="ct" id="nSk">0</span></a>
         <a data-v="digest"><span class="ic">▤</span> Weekly Digest</a>
       </div>
-      <div class="grp">我的 agent</div>
+      <div class="grp">My agents</div>
       <div class="member"><span class="av">⬡</span> Refactor-Bot <span class="st"></span></div>
       <div class="member"><span class="av" style="background:#7c3aed">⬡</span> Test-Writer <span class="st" style="background:#64748b"></span></div>
     </div>
@@ -114,38 +114,38 @@
     <div class="main" id="main"></div>
 
     <div class="today">
-      <h3>今天，给你</h3>
-      <div class="auto">⬡ 自动汇总 · 没人写汇报</div>
+      <h3>Today, for you</h3>
+      <div class="auto">⬡ Auto-summarized · no one writes status reports</div>
       <div class="stat">
-        <div class="sbox"><div class="num" id="sShip">0</div><div class="lab">已合并</div></div>
-        <div class="sbox"><div class="num" id="sRun">0</div><div class="lab">进行中</div></div>
-        <div class="sbox"><div class="num" id="sQ">0</div><div class="lab">待办</div></div>
+        <div class="sbox"><div class="num" id="sShip">0</div><div class="lab">Merged</div></div>
+        <div class="sbox"><div class="num" id="sRun">0</div><div class="lab">In progress</div></div>
+        <div class="sbox"><div class="num" id="sQ">0</div><div class="lab">To do</div></div>
       </div>
-      <div class="titem" onclick="setView('skills')"><div class="t">✦ 你的 skill 库</div><div class="m" id="skNote">还没有 skill</div></div>
-      <div class="titem" onclick="setView('decisions')"><div class="t">⎘ 团队记忆</div><div class="m" id="memNote">基础约定已就绪</div></div>
-      <div class="note">每张卡 = 一个任务，进去就是那块画布（目标→agent→结果），团队 context 自动拉。</div>
+      <div class="titem" onclick="setView('skills')"><div class="t">✦ Your skill library</div><div class="m" id="skNote">No skills yet</div></div>
+      <div class="titem" onclick="setView('decisions')"><div class="t">⎘ Team memory</div><div class="m" id="memNote">Base conventions ready</div></div>
+      <div class="note">Each card = one task. Open it to enter its canvas (goal → agent → result); team context is pulled in automatically.</div>
     </div>
   </div>
 
 <script>
-const BASE_MEM=['token refresh 用 per-token mutex（吞吐优先）','OAuth refresh 窗口有 double-fire 历史','外部写必须带 idempotency key','只在系统边界做校验','日志结构化 JSON','不破坏 public API 签名'];
+const BASE_MEM=['Token refresh uses a per-token mutex (throughput first)','OAuth refresh window has a history of double-firing','External writes must carry an idempotency key','Validate only at system boundaries','Logs are structured JSON','Never break public API signatures'];
 function esc(s){return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 function ls(k,d){try{const a=JSON.parse(localStorage.getItem(k)||'null');return a==null?d:a;}catch(e){return d;}}
 
 function loadTasks(){const a=ls('loop_tasks',null);if(Array.isArray(a))return a;
   return [
-    {id:'TASK-482',title:'修复 token 在高并发临近过期时偶发刷新失败',status:'running'},
-    {id:'TASK-477',title:'Billing webhook 重试 + 幂等',status:'review'},
-    {id:'TASK-470',title:'OAuth flow 重构',status:'shipped'},
-    {id:'TASK-485',title:'给 public API 加 rate-limit headers',status:'queued'},
-    {id:'TASK-488',title:'日志迁移到结构化 JSON',status:'queued'},
+    {id:'TASK-482',title:'Fix intermittent token refresh failures near expiry under high concurrency',status:'running'},
+    {id:'TASK-477',title:'Billing webhook retries + idempotency',status:'review'},
+    {id:'TASK-470',title:'OAuth flow refactor',status:'shipped'},
+    {id:'TASK-485',title:'Add rate-limit headers to the public API',status:'queued'},
+    {id:'TASK-488',title:'Migrate logs to structured JSON',status:'queued'},
   ];
 }
 let tasks=loadTasks();function saveTasks(){localStorage.setItem('loop_tasks',JSON.stringify(tasks));}saveTasks();
 function skills(){const a=ls('loop_skills',[]);return Array.isArray(a)?a:[];}
 function mem(){const a=ls('loop_mem',[]);return Array.isArray(a)?a:[];}
 
-const CHIP={queued:'<span class="chip q">待办</span>',running:'<span class="chip run"><span class="d"></span>进行中</span>',review:'<span class="chip rev">待 review</span>',shipped:'<span class="chip done">✓ 已合并</span>'};
+const CHIP={queued:'<span class="chip q">To do</span>',running:'<span class="chip run"><span class="d"></span>In progress</span>',review:'<span class="chip rev">In review</span>',shipped:'<span class="chip done">✓ Merged</span>'};
 function openTask(id){const t=tasks.find(x=>x.id===id);if(t&&t.status==='queued'){t.status='running';saveTasks();}location.href='loop-canvas-live.html?task='+encodeURIComponent(id);}
 
 let view='mywork';
@@ -160,8 +160,8 @@ function render(){
   document.getElementById('sQ').textContent=tasks.filter(t=>t.status==='queued').length;
   document.getElementById('nDec').textContent=BASE_MEM.length+mem().length;
   document.getElementById('nSk').textContent=skills().length;
-  document.getElementById('skNote').textContent=skills().length?(skills().length+' 个可复用 skill'):'还没有 skill（在画布里 ✦ 提取）';
-  document.getElementById('memNote').textContent='基础约定 + '+mem().length+' 条沉淀';
+  document.getElementById('skNote').textContent=skills().length?(skills().length+' reusable skills'):'No skills yet (extract one with ✦ in the canvas)';
+  document.getElementById('memNote').textContent='Base conventions + '+mem().length+' captured';
 
   if(view==='mywork')return renderBoard(m);
   if(view==='skills')return renderSkills(m);
@@ -170,44 +170,44 @@ function render(){
   if(view==='feed')return renderFeed(m);
 }
 function renderBoard(m){
-  m.innerHTML='<div class="ph"><div><h2>My Work</h2><div class="sub">你的任务 —— 点任意一张卡，进画布开干</div></div><button class="new" id="newBtn">+ 新建任务</button></div><div class="board" id="board"></div>';
-  const COLS=[['queued','待办','q'],['running','进行中',''],['review','待 review',''],['shipped','已合并','']];
+  m.innerHTML='<div class="ph"><div><h2>My Work</h2><div class="sub">Your tasks — click any card to open its canvas and get started</div></div><button class="new" id="newBtn">+ New task</button></div><div class="board" id="board"></div>';
+  const COLS=[['queued','To do','q'],['running','In progress',''],['review','In review',''],['shipped','Merged','']];
   const b=m.querySelector('#board');
   COLS.forEach(([key,label,cls])=>{
     const items=tasks.filter(t=>t.status===key);
     const col=document.createElement('div');col.className='col '+cls;
     col.innerHTML='<h5>'+label+' <span class="ct">'+items.length+'</span></h5>';
     items.forEach(t=>{const c=document.createElement('div');c.className='tcard';c.onclick=()=>openTask(t.id);
-      c.innerHTML='<div class="id">#'+esc(t.id)+'</div><div class="ti">'+esc(t.title)+'</div><div class="bot">'+CHIP[t.status]+(t.status==='running'||t.status==='review'?' · <span class="av">⬡</span> Refactor-Bot':'')+' · <span class="colopen">打开画布 →</span></div>';
+      c.innerHTML='<div class="id">#'+esc(t.id)+'</div><div class="ti">'+esc(t.title)+'</div><div class="bot">'+CHIP[t.status]+(t.status==='running'||t.status==='review'?' · <span class="av">⬡</span> Refactor-Bot':'')+' · <span class="colopen">Open canvas →</span></div>';
       col.appendChild(c);});
     if(!items.length)col.innerHTML+='<div style="font-size:11.5px;color:var(--muted);padding:6px">—</div>';
     b.appendChild(col);
   });
-  m.querySelector('#newBtn').onclick=()=>{const ti=prompt('新任务 —— 你要 agent 做什么？','');if(!ti||!ti.trim())return;tasks.unshift({id:'TASK-'+(400+Math.floor(Math.random()*599)),title:ti.trim(),status:'queued'});saveTasks();render();};
+  m.querySelector('#newBtn').onclick=()=>{const ti=prompt('New task — what do you want the agent to do?','');if(!ti||!ti.trim())return;tasks.unshift({id:'TASK-'+(400+Math.floor(Math.random()*599)),title:ti.trim(),status:'queued'});saveTasks();render();};
 }
 function renderSkills(m){
   const sk=skills();
-  let body=sk.length?sk.map((s,i)=>`<div class="lcard sk"><div class="lt"><span class="tag" style="background:var(--indigo-soft);color:#3730a3">✦ SKILL</span>${esc(s.name||'skill')}</div><div class="lw"><b>用于：</b>${esc(s.when||'—')}</div><div class="lm">${esc((s.steps||[]).join(' → '))}</div><div class="lrow"><button class="obtn" onclick="shareSk(${i})">📋 分享</button><button class="obtn no" onclick="delSk(${i})">✕ 删除</button></div></div>`).join(''):'<div class="empty">还没有 skill。在画布的终端里跑出好结果后点 <b>✦ 提取 skill</b>，成功的做法会沉淀到这里，<b>任何新任务都能复用</b>。</div>';
-  m.innerHTML='<div class="ph"><div><h2>Skills 库</h2><div class="sub">从成功 session 沉淀的可复用做法 · 跨任务复用 / 分享</div></div></div>'+body;
+  let body=sk.length?sk.map((s,i)=>`<div class="lcard sk"><div class="lt"><span class="tag" style="background:var(--indigo-soft);color:#3730a3">✦ SKILL</span>${esc(s.name||'skill')}</div><div class="lw"><b>For:</b> ${esc(s.when||'—')}</div><div class="lm">${esc((s.steps||[]).join(' → '))}</div><div class="lrow"><button class="obtn" onclick="shareSk(${i})">📋 Share</button><button class="obtn no" onclick="delSk(${i})">✕ Delete</button></div></div>`).join(''):'<div class="empty">No skills yet. After you get a good result in the canvas terminal, click <b>✦ Extract skill</b> — successful approaches are saved here and <b>any new task can reuse them</b>.</div>';
+  m.innerHTML='<div class="ph"><div><h2>Skills library</h2><div class="sub">Reusable approaches distilled from successful sessions · reuse across tasks / share</div></div></div>'+body;
 }
-function shareSk(i){const s=skills()[i];if(!s)return;try{navigator.clipboard.writeText(JSON.stringify(s,null,2));}catch(e){}alert('已复制 skill JSON，可发给别人复用。');}
+function shareSk(i){const s=skills()[i];if(!s)return;try{navigator.clipboard.writeText(JSON.stringify(s,null,2));}catch(e){}alert('Skill JSON copied — share it with others to reuse.');}
 function delSk(i){const a=skills();a.splice(i,1);localStorage.setItem('loop_skills',JSON.stringify(a));render();}
 function renderDecisions(m){
   const md=mem();
-  const base=BASE_MEM.map(x=>`<div class="lcard dec"><div class="lt"><span class="tag" style="background:var(--amber-soft);color:var(--amber)">约定</span>${esc(x)}</div><div class="lm">团队基础记忆 · 拉 context 时自动用</div></div>`).join('');
-  const grown=md.map(x=>`<div class="lcard dec"><div class="lt"><span class="tag" style="background:var(--green-soft);color:var(--green)">已批准</span>${esc(x.t||'决定')}</div><div class="lw">${esc(x.x||'')}</div><div class="lm">批准 outcome 时写回 · 来自真实 session</div></div>`).join('');
-  m.innerHTML='<div class="ph"><div><h2>Decisions · 团队记忆</h2><div class="sub">agent 拉 context 时从这里挑相关的；批准 outcome 会让它增长</div></div></div>'+grown+base;
+  const base=BASE_MEM.map(x=>`<div class="lcard dec"><div class="lt"><span class="tag" style="background:var(--amber-soft);color:var(--amber)">Convention</span>${esc(x)}</div><div class="lm">Team base memory · used automatically when pulling context</div></div>`).join('');
+  const grown=md.map(x=>`<div class="lcard dec"><div class="lt"><span class="tag" style="background:var(--green-soft);color:var(--green)">Approved</span>${esc(x.t||'Decision')}</div><div class="lw">${esc(x.x||'')}</div><div class="lm">Written back when an outcome is approved · from a real session</div></div>`).join('');
+  m.innerHTML='<div class="ph"><div><h2>Decisions · Team memory</h2><div class="sub">Agents pick relevant entries from here when pulling context; approving outcomes makes it grow</div></div></div>'+grown+base;
 }
 function renderDigest(m){
-  m.innerHTML='<div class="ph"><div><h2>Weekly Digest</h2><div class="sub">自动汇总 · 没人手写状态</div></div></div>'+
-   '<div class="drow"><div class="dbox"><div class="num">'+tasks.filter(t=>t.status==='shipped').length+'</div><div class="lab">已合并</div></div><div class="dbox"><div class="num">'+(BASE_MEM.length+mem().length)+'</div><div class="lab">decisions</div></div><div class="dbox"><div class="num">'+skills().length+'</div><div class="lab">skills</div></div><div class="dbox"><div class="num">'+tasks.filter(t=>t.status==='running').length+'</div><div class="lab">进行中</div></div></div>'+
-   '<div class="lcard"><div class="lt">本周</div><div class="lw">'+tasks.filter(t=>t.status==='shipped').map(t=>'✓ '+esc(t.title)).join('<br>')+'</div></div>';
+  m.innerHTML='<div class="ph"><div><h2>Weekly Digest</h2><div class="sub">Auto-summarized · no one writes status by hand</div></div></div>'+
+   '<div class="drow"><div class="dbox"><div class="num">'+tasks.filter(t=>t.status==='shipped').length+'</div><div class="lab">Merged</div></div><div class="dbox"><div class="num">'+(BASE_MEM.length+mem().length)+'</div><div class="lab">decisions</div></div><div class="dbox"><div class="num">'+skills().length+'</div><div class="lab">skills</div></div><div class="dbox"><div class="num">'+tasks.filter(t=>t.status==='running').length+'</div><div class="lab">In progress</div></div></div>'+
+   '<div class="lcard"><div class="lt">This week</div><div class="lw">'+tasks.filter(t=>t.status==='shipped').map(t=>'✓ '+esc(t.title)).join('<br>')+'</div></div>';
 }
 function renderFeed(m){
   const order={running:0,review:1,queued:2,shipped:3};
   const items=[...tasks].sort((a,b)=>order[a.status]-order[b.status]);
-  m.innerHTML='<div class="ph"><div><h2>Team Feed</h2><div class="sub">大家 + agent 在做什么</div></div></div>'+
-   items.map(t=>'<div class="feedrow"><span class="av">⬡</span><div><div class="ft"><b>Refactor-Bot</b> · '+esc(t.title)+'</div><div class="fa">'+({running:'进行中',review:'待 review',queued:'排队中',shipped:'已合并'}[t.status])+' · #'+esc(t.id)+'</div></div></div>').join('');
+  m.innerHTML='<div class="ph"><div><h2>Team Feed</h2><div class="sub">What people + agents are working on</div></div></div>'+
+   items.map(t=>'<div class="feedrow"><span class="av">⬡</span><div><div class="ft"><b>Refactor-Bot</b> · '+esc(t.title)+'</div><div class="fa">'+({running:'In progress',review:'In review',queued:'Queued',shipped:'Merged'}[t.status])+' · #'+esc(t.id)+'</div></div></div>').join('');
 }
 render();
 </script>
