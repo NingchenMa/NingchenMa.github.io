@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Loop — My Work</title>
+<style>
+  :root{
+    --ink:#0b1220;--ink2:#1e293b;--muted:#64748b;--line:#e6ebf1;--page:#eef2f6;--card:#fff;--rail:#0b1220;--rail2:#141d30;
+    --teal:#0d9488;--teal-soft:#ccfbf1;--indigo:#4f46e5;--indigo-soft:#e0e7ff;
+    --amber:#b45309;--amber-soft:#fef3c7;--green:#15803d;--green-soft:#dcfce7;--live:#22c55e;--pink:#be185d;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--page);color:var(--ink);font-family:-apple-system,"SF Pro Text","Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased;line-height:1.5;}
+  .mono{font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace;}
+  .topbar{display:flex;align-items:center;gap:13px;padding:11px 18px;background:#fbfdff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:10;}
+  .logo{width:30px;height:30px;border-radius:9px;background:linear-gradient(135deg,var(--teal),#0ea5a0);display:grid;place-items:center;color:#fff;font-weight:800;font-size:16px;box-shadow:0 4px 12px rgba(13,148,136,.4);}
+  .topbar h1{margin:0;font-size:16px;letter-spacing:-.3px;}
+  .search{flex:1;max-width:340px;margin-left:6px;background:#eef2f6;border:1px solid var(--line);border-radius:9px;padding:7px 12px;font-size:12.5px;color:var(--muted);}
+  .me{margin-left:auto;display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--ink2);}
+  .me .av{width:26px;height:26px;border-radius:50%;background:var(--teal);color:#fff;display:grid;place-items:center;font-weight:700;font-size:11px;}
+
+  .layout{display:grid;grid-template-columns:188px 1fr 270px;min-height:calc(100vh - 53px);}
+  .rail{background:var(--rail);color:#cbd5e1;padding:16px 11px;}
+  .rail .grp{font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:#64748b;margin:16px 7px 7px;}
+  .nav a{display:flex;align-items:center;gap:10px;padding:8px 11px;border-radius:9px;color:#cbd5e1;text-decoration:none;font-size:13px;margin-bottom:3px;cursor:pointer;}
+  .nav a:hover{background:#101829;}
+  .nav a.on{background:var(--rail2);color:#fff;}
+  .nav a .ic{width:15px;text-align:center;opacity:.85;}
+  .nav a .ct{margin-left:auto;background:#334155;color:#cbd5e1;font-size:10px;font-weight:700;border-radius:999px;padding:1px 7px;}
+  .member{display:flex;align-items:center;gap:9px;padding:6px 7px;font-size:12.5px;color:#e2e8f0;}
+  .member .av{width:22px;height:22px;border-radius:50%;background:var(--indigo);color:#fff;display:grid;place-items:center;font-weight:700;font-size:9px;}
+  .member .st{width:7px;height:7px;border-radius:50%;margin-left:auto;background:var(--live);}
+
+  .main{padding:20px 22px;}
+  .ph{display:flex;align-items:center;gap:11px;margin-bottom:16px;}
+  .ph h2{margin:0;font-size:20px;letter-spacing:-.4px;}
+  .ph .sub{color:var(--muted);font-size:12.5px;}
+  .ph .new{margin-left:auto;background:var(--teal);color:#fff;border:none;border-radius:9px;padding:9px 15px;font-size:13px;font-weight:700;cursor:pointer;box-shadow:0 5px 14px rgba(13,148,136,.3);}
+
+  .board{display:grid;grid-template-columns:repeat(4,1fr);gap:13px;}
+  .col h5{margin:0 0 10px;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);display:flex;gap:7px;align-items:center;}
+  .col h5 .ct{background:#e2e8f0;color:#475569;border-radius:999px;font-size:10px;padding:0 7px;}
+  .tcard{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 13px;margin-bottom:10px;box-shadow:0 4px 11px rgba(15,23,42,.05);cursor:pointer;transition:transform .08s,box-shadow .12s;}
+  .tcard:hover{transform:translateY(-2px);box-shadow:0 10px 22px rgba(15,23,42,.12);border-color:#cbd5e1;}
+  .tcard .id{font-size:10px;color:var(--muted);}
+  .tcard .ti{font-size:13.5px;font-weight:600;margin:4px 0 10px;line-height:1.35;}
+  .tcard .bot{display:flex;align-items:center;gap:7px;font-size:10.5px;color:var(--muted);}
+  .tcard .bot .av{width:18px;height:18px;border-radius:50%;background:var(--indigo);color:#fff;display:grid;place-items:center;font-size:8px;font-weight:700;}
+  .chip{font-size:10px;font-weight:700;border-radius:999px;padding:3px 9px;display:inline-flex;align-items:center;gap:5px;}
+  .chip.run{background:var(--green-soft);color:var(--green);} .chip.run .d{width:6px;height:6px;border-radius:50%;background:var(--live);}
+  .chip.rev{background:var(--amber-soft);color:var(--amber);}
+  .chip.done{background:var(--green-soft);color:var(--green);}
+  .chip.q{background:#eef2f6;color:var(--muted);}
+  .col.q .tcard{border-style:dashed;box-shadow:none;background:#f8fafc;}
+  .colopen{font-size:11px;color:var(--teal);font-weight:700;}
+
+  /* generic list cards (skills / decisions / feed) */
+  .lcard{background:#fff;border:1px solid var(--line);border-radius:12px;padding:13px 15px;margin-bottom:11px;box-shadow:0 4px 11px rgba(15,23,42,.05);max-width:720px;}
+  .lcard.dec{border-left:3px solid var(--amber);}
+  .lcard.sk{border-left:3px solid var(--indigo);}
+  .lcard .lt{font-size:13.5px;font-weight:700;}
+  .lcard .lt .tag{font-size:10px;font-weight:800;border-radius:6px;padding:2px 7px;margin-right:7px;}
+  .lcard .lw{font-size:12px;color:var(--ink2);margin-top:5px;}
+  .lcard .lm{font-size:11px;color:var(--muted);margin-top:6px;}
+  .lcard .lrow{display:flex;gap:7px;margin-top:10px;}
+  .obtn{font-size:11px;font-weight:700;border:1px solid var(--line);background:#fff;border-radius:7px;padding:5px 10px;cursor:pointer;color:var(--ink2);}
+  .obtn.ok{background:var(--teal);color:#fff;border-color:var(--teal);} .obtn.no{color:#b91c1c;}
+  .empty{font-size:13px;color:var(--muted);background:#fff;border:1px dashed #cbd5e1;border-radius:12px;padding:18px;max-width:720px;}
+  .empty b{color:var(--ink2);}
+
+  .feedrow{display:flex;gap:11px;padding:11px 2px;border-bottom:1px solid var(--line);max-width:720px;}
+  .feedrow .av{width:26px;height:26px;border-radius:50%;background:var(--indigo);color:#fff;display:grid;place-items:center;font-size:10px;font-weight:700;flex:none;}
+  .feedrow .ft{font-size:13px;color:var(--ink2);} .feedrow .fa{font-size:11px;color:var(--muted);margin-top:2px;}
+
+  .drow{display:flex;gap:11px;margin-bottom:16px;max-width:720px;}
+  .dbox{flex:1;background:#fff;border:1px solid var(--line);border-radius:12px;padding:13px;text-align:center;}
+  .dbox .num{font-size:22px;font-weight:800;letter-spacing:-.5px;} .dbox .lab{font-size:10.5px;color:var(--muted);margin-top:1px;}
+
+  .today{background:#fbfdff;border-left:1px solid var(--line);padding:20px 18px;}
+  .today h3{margin:0 0 3px;font-size:14px;}
+  .today .auto{font-size:10px;font-weight:700;color:var(--indigo);background:var(--indigo-soft);border-radius:6px;padding:2px 8px;display:inline-block;margin-bottom:13px;}
+  .stat{display:flex;gap:9px;margin-bottom:14px;}
+  .sbox{flex:1;background:#fff;border:1px solid var(--line);border-radius:11px;padding:10px;text-align:center;}
+  .sbox .num{font-size:19px;font-weight:800;letter-spacing:-.5px;} .sbox .lab{font-size:10px;color:var(--muted);margin-top:1px;}
+  .titem{background:#fff;border:1px solid var(--line);border-radius:10px;padding:9px 11px;margin-bottom:8px;font-size:12px;cursor:pointer;}
+  .titem:hover{border-color:#cbd5e1;}
+  .titem .t{font-weight:600;} .titem .m{font-size:10.5px;color:var(--muted);margin-top:2px;}
+  .note{font-size:11.5px;color:var(--muted);margin-top:6px;}
+</style>
+</head>
+<body>
+  <div class="topbar">
+    <div class="logo">↻</div>
+    <h1>Loop</h1>
+    <div class="search">⌕&nbsp;&nbsp;搜任务 / 决定 / 人 / skill…</div>
+    <div class="me"><span class="av">MC</span> Maya Chen</div>
+  </div>
+
+  <div class="layout">
+    <div class="rail">
+      <div class="nav" id="nav">
+        <a data-v="mywork" class="on"><span class="ic">▦</span> My Work</a>
+        <a data-v="feed"><span class="ic">◷</span> Team Feed</a>
+        <a data-v="decisions"><span class="ic">⎘</span> Decisions <span class="ct" id="nDec">0</span></a>
+        <a data-v="skills"><span class="ic">✦</span> Skills <span class="ct" id="nSk">0</span></a>
+        <a data-v="digest"><span class="ic">▤</span> Weekly Digest</a>
+      </div>
+      <div class="grp">我的 agent</div>
+      <div class="member"><span class="av">⬡</span> Refactor-Bot <span class="st"></span></div>
+      <div class="member"><span class="av" style="background:#7c3aed">⬡</span> Test-Writer <span class="st" style="background:#64748b"></span></div>
+    </div>
+
+    <div class="main" id="main"></div>
+
+    <div class="today">
+      <h3>今天，给你</h3>
+      <div class="auto">⬡ 自动汇总 · 没人写汇报</div>
+      <div class="stat">
+        <div class="sbox"><div class="num" id="sShip">0</div><div class="lab">已合并</div></div>
+        <div class="sbox"><div class="num" id="sRun">0</div><div class="lab">进行中</div></div>
+        <div class="sbox"><div class="num" id="sQ">0</div><div class="lab">待办</div></div>
+      </div>
+      <div class="titem" onclick="setView('skills')"><div class="t">✦ 你的 skill 库</div><div class="m" id="skNote">还没有 skill</div></div>
+      <div class="titem" onclick="setView('decisions')"><div class="t">⎘ 团队记忆</div><div class="m" id="memNote">基础约定已就绪</div></div>
+      <div class="note">每张卡 = 一个任务，进去就是那块画布（目标→agent→结果），团队 context 自动拉。</div>
+    </div>
+  </div>
+
+<script>
+const BASE_MEM=['token refresh 用 per-token mutex（吞吐优先）','OAuth refresh 窗口有 double-fire 历史','外部写必须带 idempotency key','只在系统边界做校验','日志结构化 JSON','不破坏 public API 签名'];
+function esc(s){return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function ls(k,d){try{const a=JSON.parse(localStorage.getItem(k)||'null');return a==null?d:a;}catch(e){return d;}}
+
+function loadTasks(){const a=ls('loop_tasks',null);if(Array.isArray(a))return a;
+  return [
+    {id:'TASK-482',title:'修复 token 在高并发临近过期时偶发刷新失败',status:'running'},
+    {id:'TASK-477',title:'Billing webhook 重试 + 幂等',status:'review'},
+    {id:'TASK-470',title:'OAuth flow 重构',status:'shipped'},
+    {id:'TASK-485',title:'给 public API 加 rate-limit headers',status:'queued'},
+    {id:'TASK-488',title:'日志迁移到结构化 JSON',status:'queued'},
+  ];
+}
+let tasks=loadTasks();function saveTasks(){localStorage.setItem('loop_tasks',JSON.stringify(tasks));}saveTasks();
+function skills(){const a=ls('loop_skills',[]);return Array.isArray(a)?a:[];}
+function mem(){const a=ls('loop_mem',[]);return Array.isArray(a)?a:[];}
+
+const CHIP={queued:'<span class="chip q">待办</span>',running:'<span class="chip run"><span class="d"></span>进行中</span>',review:'<span class="chip rev">待 review</span>',shipped:'<span class="chip done">✓ 已合并</span>'};
+function openTask(id){const t=tasks.find(x=>x.id===id);if(t&&t.status==='queued'){t.status='running';saveTasks();}location.href='loop-canvas-live.html?task='+encodeURIComponent(id);}
+
+let view='mywork';
+function setView(v){view=v;[...document.querySelectorAll('#nav a')].forEach(a=>a.classList.toggle('on',a.dataset.v===v));render();}
+[...document.querySelectorAll('#nav a')].forEach(a=>a.onclick=()=>setView(a.dataset.v));
+
+function render(){
+  const m=document.getElementById('main');
+  // sidebar counts
+  document.getElementById('sShip').textContent=tasks.filter(t=>t.status==='shipped').length;
+  document.getElementById('sRun').textContent=tasks.filter(t=>t.status==='running').length;
+  document.getElementById('sQ').textContent=tasks.filter(t=>t.status==='queued').length;
+  document.getElementById('nDec').textContent=BASE_MEM.length+mem().length;
+  document.getElementById('nSk').textContent=skills().length;
+  document.getElementById('skNote').textContent=skills().length?(skills().length+' 个可复用 skill'):'还没有 skill（在画布里 ✦ 提取）';
+  document.getElementById('memNote').textContent='基础约定 + '+mem().length+' 条沉淀';
+
+  if(view==='mywork')return renderBoard(m);
+  if(view==='skills')return renderSkills(m);
+  if(view==='decisions')return renderDecisions(m);
+  if(view==='digest')return renderDigest(m);
+  if(view==='feed')return renderFeed(m);
+}
+function renderBoard(m){
+  m.innerHTML='<div class="ph"><div><h2>My Work</h2><div class="sub">你的任务 —— 点任意一张卡，进画布开干</div></div><button class="new" id="newBtn">+ 新建任务</button></div><div class="board" id="board"></div>';
+  const COLS=[['queued','待办','q'],['running','进行中',''],['review','待 review',''],['shipped','已合并','']];
+  const b=m.querySelector('#board');
+  COLS.forEach(([key,label,cls])=>{
+    const items=tasks.filter(t=>t.status===key);
+    const col=document.createElement('div');col.className='col '+cls;
+    col.innerHTML='<h5>'+label+' <span class="ct">'+items.length+'</span></h5>';
+    items.forEach(t=>{const c=document.createElement('div');c.className='tcard';c.onclick=()=>openTask(t.id);
+      c.innerHTML='<div class="id">#'+esc(t.id)+'</div><div class="ti">'+esc(t.title)+'</div><div class="bot">'+CHIP[t.status]+(t.status==='running'||t.status==='review'?' · <span class="av">⬡</span> Refactor-Bot':'')+' · <span class="colopen">打开画布 →</span></div>';
+      col.appendChild(c);});
+    if(!items.length)col.innerHTML+='<div style="font-size:11.5px;color:var(--muted);padding:6px">—</div>';
+    b.appendChild(col);
+  });
+  m.querySelector('#newBtn').onclick=()=>{const ti=prompt('新任务 —— 你要 agent 做什么？','');if(!ti||!ti.trim())return;tasks.unshift({id:'TASK-'+(400+Math.floor(Math.random()*599)),title:ti.trim(),status:'queued'});saveTasks();render();};
+}
+function renderSkills(m){
+  const sk=skills();
+  let body=sk.length?sk.map((s,i)=>`<div class="lcard sk"><div class="lt"><span class="tag" style="background:var(--indigo-soft);color:#3730a3">✦ SKILL</span>${esc(s.name||'skill')}</div><div class="lw"><b>用于：</b>${esc(s.when||'—')}</div><div class="lm">${esc((s.steps||[]).join(' → '))}</div><div class="lrow"><button class="obtn" onclick="shareSk(${i})">📋 分享</button><button class="obtn no" onclick="delSk(${i})">✕ 删除</button></div></div>`).join(''):'<div class="empty">还没有 skill。在画布的终端里跑出好结果后点 <b>✦ 提取 skill</b>，成功的做法会沉淀到这里，<b>任何新任务都能复用</b>。</div>';
+  m.innerHTML='<div class="ph"><div><h2>Skills 库</h2><div class="sub">从成功 session 沉淀的可复用做法 · 跨任务复用 / 分享</div></div></div>'+body;
+}
+function shareSk(i){const s=skills()[i];if(!s)return;try{navigator.clipboard.writeText(JSON.stringify(s,null,2));}catch(e){}alert('已复制 skill JSON，可发给别人复用。');}
+function delSk(i){const a=skills();a.splice(i,1);localStorage.setItem('loop_skills',JSON.stringify(a));render();}
+function renderDecisions(m){
+  const md=mem();
+  const base=BASE_MEM.map(x=>`<div class="lcard dec"><div class="lt"><span class="tag" style="background:var(--amber-soft);color:var(--amber)">约定</span>${esc(x)}</div><div class="lm">团队基础记忆 · 拉 context 时自动用</div></div>`).join('');
+  const grown=md.map(x=>`<div class="lcard dec"><div class="lt"><span class="tag" style="background:var(--green-soft);color:var(--green)">已批准</span>${esc(x.t||'决定')}</div><div class="lw">${esc(x.x||'')}</div><div class="lm">批准 outcome 时写回 · 来自真实 session</div></div>`).join('');
+  m.innerHTML='<div class="ph"><div><h2>Decisions · 团队记忆</h2><div class="sub">agent 拉 context 时从这里挑相关的；批准 outcome 会让它增长</div></div></div>'+grown+base;
+}
+function renderDigest(m){
+  m.innerHTML='<div class="ph"><div><h2>Weekly Digest</h2><div class="sub">自动汇总 · 没人手写状态</div></div></div>'+
+   '<div class="drow"><div class="dbox"><div class="num">'+tasks.filter(t=>t.status==='shipped').length+'</div><div class="lab">已合并</div></div><div class="dbox"><div class="num">'+(BASE_MEM.length+mem().length)+'</div><div class="lab">decisions</div></div><div class="dbox"><div class="num">'+skills().length+'</div><div class="lab">skills</div></div><div class="dbox"><div class="num">'+tasks.filter(t=>t.status==='running').length+'</div><div class="lab">进行中</div></div></div>'+
+   '<div class="lcard"><div class="lt">本周</div><div class="lw">'+tasks.filter(t=>t.status==='shipped').map(t=>'✓ '+esc(t.title)).join('<br>')+'</div></div>';
+}
+function renderFeed(m){
+  const order={running:0,review:1,queued:2,shipped:3};
+  const items=[...tasks].sort((a,b)=>order[a.status]-order[b.status]);
+  m.innerHTML='<div class="ph"><div><h2>Team Feed</h2><div class="sub">大家 + agent 在做什么</div></div></div>'+
+   items.map(t=>'<div class="feedrow"><span class="av">⬡</span><div><div class="ft"><b>Refactor-Bot</b> · '+esc(t.title)+'</div><div class="fa">'+({running:'进行中',review:'待 review',queued:'排队中',shipped:'已合并'}[t.status])+' · #'+esc(t.id)+'</div></div></div>').join('');
+}
+render();
+</script>
+</body>
+</html>
