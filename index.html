@@ -60,7 +60,7 @@
   .hero .wrap{border-top:none;padding-top:0;}
   .hero .eyebrow{color:var(--blue-dark);font-weight:600;font-size:14px;margin-bottom:14px;position:relative;}
   .hero h1{font-size:48px;max-width:none;margin-bottom:14px;}
-  .hero .tagline{font-size:20px;font-weight:600;color:var(--ink);max-width:24ch;margin:0 0 16px;position:relative;letter-spacing:-.3px;}
+  .hero .tagline{font-size:20px;font-weight:600;color:var(--ink);max-width:40ch;margin:0 0 22px;position:relative;letter-spacing:-.3px;}
   .hero .lead{font-size:17px;color:var(--ink-soft);max-width:50ch;margin:0 0 26px;position:relative;}
   .hero-shapes{position:absolute;right:-6px;top:40px;width:205px;height:205px;pointer-events:none;}
   .hero-actions{display:flex;gap:12px;flex-wrap:wrap;position:relative;}
@@ -109,6 +109,16 @@
     section .wrap{padding-top:40px;}
     .hero-shapes{display:none;}
   }
+  .facts{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin:0 0 26px;max-width:620px;position:relative;}
+  .fact{border:1px solid var(--line);border-radius:12px;padding:12px 14px;background:rgba(255,255,255,.62);}
+  .fact .k{font-size:11.5px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);}
+  .fact .v{font-weight:600;font-size:15px;color:var(--ink);line-height:1.35;margin-top:2px;}
+  .fact .s{font-size:13.5px;color:var(--ink-soft);}
+  .hero h1 .aka{font-weight:500;color:var(--muted);-webkit-text-fill-color:var(--muted);}
+  .item li strong{color:var(--ink);}
+  .item .tags{margin-top:10px;}
+  .cards .card:last-child:nth-child(odd){grid-column:1 / -1;}
+  @media(max-width:640px){.facts{grid-template-columns:1fr;}}
 </style>
 </head>
 <body>
@@ -119,10 +129,10 @@
   <div class="nav-inner">
     <span class="brand">Marissa Ma</span>
     <div class="nav-links">
-      <a href="#about">About</a>
-      <a href="#education">Education</a>
       <a href="#experience">Experience</a>
-      <a href="#projects">Work</a>
+      <a href="#education">Education</a>
+      <a href="#projects">Projects</a>
+      <a href="#skills">Skills</a>
       <a href="#contact">Contact</a>
     </div>
   </div>
@@ -136,23 +146,81 @@
       <circle cx="72" cy="50" r="16" fill="#2f8fd6"/>
       <rect x="140" y="126" width="30" height="30" rx="9" fill="#1fa37a"/>
     </svg>
-    <div class="eyebrow">M.S. Computer Science @ Yale · Software Engineer</div>
-    <h1>Marissa <span style="font-weight:500;opacity:.7">(Ningchen)</span> Ma</h1>
-    <p class="tagline">I build backend systems &amp; AI tools that help people decide.</p>
-    <p class="lead">Currently pursuing an M.S. in Computer Science at Yale. Before that, nearly four years at Amazon building large-scale workforce planning systems and GenAI tools, and CS at McGill — compilers, operating systems, and distributed systems. I like work that sits where solid engineering meets genuinely useful outcomes.</p>
+    <div class="eyebrow">M.S. Computer Science @ Yale · Former Amazon SDE</div>
+    <h1>Marissa <span class="aka">(Ningchen)</span> Ma</h1>
+    <p class="tagline">Backend &amp; GenAI engineer with nearly 4 years building production systems at Amazon.</p>
+
+    <div class="facts">
+      <div class="fact"><div class="k">Now</div><div class="v">M.S. CS, Yale University</div><div class="s">Sep 2026 – May 2027</div></div>
+      <div class="fact"><div class="k">Experience</div><div class="v">SDE, Amazon</div><div class="s">Oct 2022 – Jun 2026</div></div>
+      <div class="fact"><div class="k">Undergrad</div><div class="v">B.S. CS (Honours), McGill</div><div class="s">First Class Honours · GPA 3.87/4.00</div></div>
+      <div class="fact"><div class="k">Core stack</div><div class="v">Java · Python · GraphQL</div><div class="s">AWS (Lambda, DynamoDB) · React</div></div>
+    </div>
+
     <div class="hero-actions">
-      <a class="btn primary" href="#projects">See my work</a>
-      <a class="btn ghost" href="#contact">Get in touch</a>
+      <a class="btn primary" href="mailto:ningchen.ma@yale.edu">Email me</a>
+      <a class="btn ghost" href="#experience">View experience</a>
     </div>
   </div>
 </header>
 
-<section id="about">
+<section id="experience">
   <div class="wrap reveal">
-    <div class="seclabel"><span class="dot"></span><span>Who I am</span></div>
-    <p>I'm a first-year M.S. Computer Science student at Yale University. Before Yale, I spent nearly four years as a software engineer in Amazon's PXT (People eXperience and Technology) org, where I led backend development for a large-scale workforce planning and analytics platform used by senior leaders to make strategic headcount and budget decisions.</p>
-    <p>I studied Computer Science at McGill University, graduating with First Class Honours. My background spans compilers, operating systems, and distributed systems — and I'm happiest working close to the hard parts of a system: data modeling, correctness under concurrency, and the architecture that holds everything together.</p>
-    <p>Lately I've been deep in GenAI and computer architecture, building agents and the infrastructure behind them to turn slow, manual data exploration into something that takes seconds.</p>
+    <div class="seclabel"><span class="dot"></span><span>Work experience</span></div>
+
+    <div class="item">
+      <div class="item-head">
+        <div><h3>Amazon</h3><div class="role">Software Development Engineer · People eXperience &amp; Technology (PXT)</div></div>
+        <div class="date">Oct 2022 – Jun 2026 · Vancouver, Canada</div>
+      </div>
+      <ul>
+        <li><strong>Backend lead</strong> for a large-scale production workforce planning &amp; analytics system used by senior leaders for headcount and budget decisions. Owned API design, data modeling, business logic, testing, deployment, and operations.</li>
+        <li><strong>40+ GraphQL APIs</strong> for data setup, scenario planning, workforce metric calculations, and complex planning workflows.</li>
+        <li><strong>Core modeling logic</strong> for hiring, attrition, promotions, and org changes, producing accurate, conflict-free headcount projections across planning dimensions.</li>
+        <li><strong>Scalable DynamoDB data models</strong> and backend services for multi-dimensional organizational data, improving performance, consistency, and reliability.</li>
+        <li><strong>GenAI analytics assistant:</strong> built the AI agent and its remote MCP server end-to-end, so business users can ask workforce questions in natural language. Cut manual data exploration from tens of minutes to seconds.</li>
+        <li><strong>React frontend</strong> for an internal service, implementing user-facing features on top of REST APIs.</li>
+      </ul>
+      <div class="tags"><span class="tag">GraphQL</span><span class="tag">DynamoDB</span><span class="tag">AWS</span><span class="tag">GenAI / MCP</span><span class="tag">React</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="research">
+  <div class="wrap reveal">
+    <div class="seclabel"><span class="dot"></span><span>Research &amp; teaching · McGill University</span></div>
+
+    <div class="item">
+      <div class="item-head">
+        <div><h3>Research Assistant, Shir Group (Compilers)</h3><div class="role">Dr. Jonathan Van der Cruysse &amp; Prof. Christophe Dubach</div></div>
+        <div class="date">May 2022 – Sep 2022</div>
+      </div>
+      <ul>
+        <li><strong>Equality saturation</strong> to optimize compiler code generation.</li>
+        <li><strong>IR-selection heuristics</strong> for optimal Neural Processing Unit (NPU) utilization.</li>
+        <li><strong>Swift code-gen toolchain</strong> using MLCompute to speed up execution on Apple M-series neural accelerators.</li>
+      </ul>
+    </div>
+
+    <div class="item">
+      <div class="item-head">
+        <div><h3>Research Assistant, ANRL Cloud Computing / IoT Group</h3><div class="role">Prof. Muthucumaru Maheswaran</div></div>
+        <div class="date">Jan 2022 – Apr 2022</div>
+      </div>
+      <ul>
+        <li><strong>ESP32 + RIOT OS</strong> configured for MQTT communication in edge-computing scenarios, improving real-time device-to-device data handling.</li>
+      </ul>
+    </div>
+
+    <div class="item">
+      <div class="item-head">
+        <div><h3>Teaching Assistant, Functional Programming (COMP 302)</h3><div class="role">Dept. of Computer Science</div></div>
+        <div class="date">Jan 2022 – Apr 2022</div>
+      </div>
+      <ul>
+        <li>Weekly office hours for <strong>50+ students</strong>; helped design assignments and graded assignments and exams.</li>
+      </ul>
+    </div>
   </div>
 </section>
 
@@ -169,95 +237,33 @@
 
     <div class="item">
       <div class="item-head">
-        <div><h3>McGill University</h3><div class="role">B.S. in Computer Science (Honours)</div></div>
+        <div><h3>McGill University</h3><div class="role">B.S. in Computer Science (Honours) · First Class Honours · GPA 3.87/4.00</div></div>
         <div class="date">Sep 2017 – Jun 2022 · Montreal, Canada</div>
       </div>
-      <ul>
-        <li>First Class Honours in Computer Science · GPA 3.87/4.00</li>
-      </ul>
-    </div>
-  </div>
-</section>
-
-<section id="experience">
-  <div class="wrap reveal">
-    <div class="seclabel"><span class="dot"></span><span>Experience</span></div>
-
-    <div class="item">
-      <div class="item-head">
-        <div><h3>Amazon</h3><div class="role">Software Development Engineer · Dept. of PXT</div></div>
-        <div class="date">Oct 2022 – Jun 2026 · Vancouver</div>
-      </div>
-      <ul>
-        <li>Led backend development for a large-scale production workforce planning and analytics system used by senior leaders for strategic headcount and budget decisions — owning API design, data modeling, business logic, testing, deployment, and operational support.</li>
-        <li>Designed and implemented 40+ GraphQL APIs supporting data setup, scenario planning, workforce metric calculations, and complex planning workflows.</li>
-        <li>Built core modeling logic for hiring, attrition, promotions, and organizational changes — ensuring accurate, conflict-free headcount projections across multiple planning dimensions.</li>
-        <li>Designed scalable DynamoDB data models and backend services for multi-dimensional organizational data, improving performance, consistency, and reliability.</li>
-        <li>Developed a GenAI-powered analytics assistant end-to-end — both the AI agent and its supporting remote MCP server — enabling business users to query workforce insights in natural language and cutting manual data exploration from tens of minutes to seconds.</li>
-        <li>Developed a React-based frontend for an internal service, implementing user-facing features and integrating with RESTful APIs.</li>
-      </ul>
-    </div>
-
-    <div class="item">
-      <div class="item-head">
-        <div><h3>Shir Group, McGill University</h3><div class="role">Research Assistant · Dr. Jonathan Van der Cruysse &amp; Prof. Christophe Dubach</div></div>
-        <div class="date">May 2022 – Sep 2022</div>
-      </div>
-      <ul>
-        <li>Optimized compiler code generation using equality saturation to improve performance and code efficiency.</li>
-        <li>Developed heuristics to select the most effective Intermediate Representation (IR) for optimal Neural Processing Unit (NPU) utilization.</li>
-        <li>Built a Swift code-generation toolchain using the MLCompute library to boost execution on Apple's M-series neural accelerator chips.</li>
-      </ul>
-    </div>
-
-    <div class="item">
-      <div class="item-head">
-        <div><h3>ANRL Cloud Computing / IoT Group, McGill University</h3><div class="role">Research Assistant · Prof. Muthucumaru Maheswaran</div></div>
-        <div class="date">Jan 2022 – Apr 2022</div>
-      </div>
-      <ul>
-        <li>Configured ESP32 micro-controllers with RIOT (a real-time mini OS), optimizing for MQTT communication in edge-computing scenarios.</li>
-        <li>Streamlined device-to-device communication, improving real-time data handling and system efficiency.</li>
-      </ul>
-    </div>
-
-    <div class="item">
-      <div class="item-head">
-        <div><h3>Teaching Assistant, McGill University</h3><div class="role">Functional Programming (COMP 302)</div></div>
-        <div class="date">Jan 2022 – Apr 2022</div>
-      </div>
-      <ul>
-        <li>Ran weekly office hours helping 50+ students review material and work through problems.</li>
-        <li>Assisted with assignment design and graded assignments and exams.</li>
-      </ul>
     </div>
   </div>
 </section>
 
 <section id="projects">
   <div class="wrap reveal">
-    <div class="seclabel"><span class="dot"></span><span>Selected work</span></div>
+    <div class="seclabel"><span class="dot"></span><span>Projects</span></div>
     <div class="cards">
       <div class="card">
-        <h3>GenAI Analytics Assistant</h3>
-        <p>An AI agent plus a remote MCP server, built end-to-end, that lets non-technical users query workforce insights in plain language — turning tens of minutes of digging into seconds.</p>
-        <div><span class="tag">GenAI</span><span class="tag">MCP</span><span class="tag">Agents</span></div>
-      </div>
-      <div class="card">
-        <h3>Loop — AI Coding-Agent Workspace</h3>
-        <p>A work surface for getting engineering done with AI agents: write a goal, the agent pulls the relevant team context itself and does the work, and successful approaches become reusable skills and shared team memory.</p>
+        <h3>Loop: AI Coding-Agent Workspace</h3>
+        <p>A workspace where you write a goal and an AI agent gathers team context and does the work. Successful approaches become reusable skills and shared team memory.</p>
         <div><span class="tag">AI Agents</span><span class="tag">Product</span><span class="tag">UI/UX</span></div>
         <div><a class="card-link" href="loop-app.html">View prototype →</a></div>
       </div>
       <div class="card">
-        <h3>A Mini Compiler</h3>
-        <p>A compiler in Java for a C-like language: lexer, parser building an AST, and a code generator targeting assembly via the Chaitin register-allocation algorithm, plus dead-code elimination.</p>
+        <h3>Mini Compiler</h3>
+        <p>A Java compiler for a C-like language: lexer, parser to AST, assembly code generation with Chaitin register allocation, and dead-code elimination.</p>
         <div><span class="tag">Java</span><span class="tag">Compilers</span></div>
       </div>
       <div class="card">
-        <h3>A Basic Operating System</h3>
-        <p>A UNIX-style OS in C with a command-line interface, a round-robin CPU scheduler, Process Control Blocks for task state, and array-based memory management.</p>
+        <h3>Mini Operating System</h3>
+        <p>A UNIX-style OS in C with a shell, round-robin CPU scheduler, Process Control Blocks, and memory management.</p>
         <div><span class="tag">C</span><span class="tag">Operating Systems</span></div>
+        <div><a class="card-link" href="https://github.com/NingchenMa/Mini-Operating-System">View on GitHub →</a></div>
       </div>
     </div>
   </div>
@@ -265,21 +271,22 @@
 
 <section id="skills">
   <div class="wrap reveal">
-    <div class="seclabel"><span class="dot"></span><span>Skills &amp; tools</span></div>
+    <div class="seclabel"><span class="dot"></span><span>Skills</span></div>
     <div class="skill-row"><div class="label">Languages</div><div class="vals">Java, Python, Scala, C/C++, OCaml, JavaScript, MIPS Assembly, Bash, PHP, HTML/CSS</div></div>
     <div class="skill-row"><div class="label">Web / APIs</div><div class="vals">React, GraphQL, REST APIs</div></div>
     <div class="skill-row"><div class="label">AWS</div><div class="vals">Lambda, DynamoDB, API Gateway, OpenSearch, ECS, Route 53, VPC</div></div>
-    <div class="skill-row"><div class="label">Focus</div><div class="vals">Backend &amp; distributed systems, software architecture, GenAI agents, computer architecture &amp; networks</div></div>
-      </div>
+    <div class="skill-row"><div class="label">GenAI</div><div class="vals">AI agents, MCP servers</div></div>
+    <div class="skill-row"><div class="label">Interests</div><div class="vals">Computer architecture, networks, software system design</div></div>
+  </div>
 </section>
 
 <section id="contact">
   <div class="wrap reveal">
-    <div class="seclabel"><span class="dot"></span><span>Get in touch</span></div>
-    <p>Always happy to talk systems, backend design, or AI tooling.</p>
+    <div class="seclabel"><span class="dot"></span><span>Contact</span></div>
     <div class="contact-links">
       <a href="mailto:ningchen.ma@yale.edu">ningchen.ma@yale.edu</a>
       <a href="mailto:ningchenma1@gmail.com">ningchenma1@gmail.com</a>
+      <a href="https://github.com/NingchenMa">GitHub</a>
       <span class="mono" style="color:var(--muted)">New Haven, CT</span>
     </div>
   </div>
