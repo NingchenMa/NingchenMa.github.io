@@ -4,360 +4,349 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Ningchen (Marissa) Ma — Software Engineer · Yale CS</title>
-<meta name="description" content="Ningchen (Marissa) Ma — M.S. Computer Science student at Yale (May 2027), previously a software engineer at Amazon for 3+ years. Backend systems, GenAI agents, distributed systems. Hack Nation 3rd place. McGill CS, First Class Honours.">
+<meta name="description" content="Ningchen (Marissa) Ma — M.S. Computer Science student at Yale (May 2027), previously a software engineer at Amazon for 4 years. Backend systems, GenAI agents, distributed systems. Hack Nation 3rd place. McGill CS, First Class Honours.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
 <style>
   :root{
-    --ink:#13202a;
-    --ink-soft:#3c4d59;
-    --muted:#5f7280;
-    --line:rgba(20,60,80,.10);
-    --blue:#2f8fd6;
-    --blue-dark:#1d6fab;
-    --green:#1fa37a;
-    --green-dark:#127a59;
-    --max:880px;
+    --bg:#0b1120; --bg-2:#0f172a; --panel:rgba(148,197,255,.045); --line:rgba(148,163,184,.14);
+    --ink:#e7edf6; --ink-2:#a8b4c7; --ink-3:#6b7a92;
+    --a1:#38bdf8; --a2:#34d399; --accent:#5eead4;
+    --grad:linear-gradient(100deg,var(--a1),var(--a2));
+    --mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
   }
-  *{box-sizing:border-box;}
-  html{scroll-behavior:smooth;}
-  body{
-    margin:0;color:var(--ink);
-    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-    line-height:1.55;font-size:16px;-webkit-font-smoothing:antialiased;
-    background:transparent;
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink-2);font:16px/1.6 Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
+  ::selection{background:rgba(94,234,212,.3);color:#fff}
+  a{color:var(--ink);text-decoration:none}
+
+  /* cursor spotlight */
+  #spot{pointer-events:none;position:fixed;inset:0;z-index:0;transition:background .2s;
+    background:radial-gradient(620px circle at var(--x,50%) var(--y,30%),rgba(56,189,248,.10),transparent 70%)}
+  /* drifting aurora */
+  .aurora{position:fixed;inset:-20% -10% auto auto;width:720px;height:720px;z-index:0;pointer-events:none;filter:blur(90px);opacity:.35;
+    background:conic-gradient(from 0deg,#38bdf8,#34d399,#0ea5e9,#38bdf8);border-radius:50%;animation:drift 22s ease-in-out infinite alternate}
+  @keyframes drift{to{transform:translate(-140px,120px) rotate(60deg) scale(1.1)}}
+  .grain{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.05;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+
+  .shell{position:relative;z-index:1;max-width:1180px;margin:0 auto;padding:0 48px;display:grid;grid-template-columns:minmax(0,.72fr) minmax(0,1.5fr);gap:64px}
+
+  /* left, sticky */
+  .left{position:sticky;top:0;height:100vh;padding:88px 0 56px;display:flex;flex-direction:column}
+  .hello{font:500 13px var(--mono);color:var(--accent);letter-spacing:.04em;margin-bottom:14px}
+  h1{margin:0;color:var(--ink);font-size:34px;line-height:1.08;letter-spacing:-.03em;font-weight:700}
+  h1 .aka{font-size:.58em;letter-spacing:-.02em;font-weight:700;vertical-align:.12em;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .role{margin-top:10px;color:var(--ink-2);font-size:15px;font-weight:500}
+  .typer{display:block;min-height:24px;margin-top:4px;color:var(--ink-3);font-weight:500;font-size:14px}
+  .typer b{color:var(--accent);font-weight:600}
+  .typer i{display:inline-block;width:2px;height:1.05em;background:var(--accent);vertical-align:-3px;margin-left:2px;animation:blink 1s steps(1) infinite}
+  @keyframes blink{50%{opacity:0}}
+  .lead{max-width:34ch;margin:16px 0 0;font-size:15.5px}
+
+  nav.toc{margin-top:40px;display:grid;gap:2px}
+  nav.toc a{display:flex;align-items:center;gap:14px;padding:7px 0;font:600 11.5px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);width:max-content}
+  nav.toc a::before{content:"";display:block;height:1px;width:32px;background:currentColor;transition:width .25s ease,background .25s}
+  nav.toc a:hover,nav.toc a.on{color:var(--ink)} nav.toc a:hover::before,nav.toc a.on::before{width:64px;background:var(--accent)}
+
+  .cta{display:flex;gap:10px;flex-wrap:wrap;margin-top:30px}
+  .btn{position:relative;display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border-radius:10px;font-weight:600;font-size:14px;border:1px solid var(--line);color:var(--ink);background:rgba(255,255,255,.03);transition:transform .15s,border-color .2s,background .2s}
+  .btn:hover{border-color:rgba(94,234,212,.5);background:rgba(94,234,212,.06)}
+  .btn.primary{border:0;color:#04121a;background:var(--grad);box-shadow:0 8px 30px rgba(56,189,248,.25)}
+  .socials{margin-top:auto;display:flex;gap:18px;align-items:center}
+  .socials a{color:var(--ink-3);transition:color .2s,transform .2s} .socials a:hover{color:var(--ink);transform:translateY(-2px)}
+  .socials svg{width:22px;height:22px;fill:currentColor}
+  .resume-mini{margin-left:auto;font:600 12.5px var(--mono);color:var(--ink-2)!important;border-bottom:1px solid var(--line);padding-bottom:2px} .resume-mini:hover{color:var(--accent)!important;border-color:var(--accent)}
+
+  /* right, scrolling */
+  .right{padding:88px 0 80px}
+  section{scroll-margin-top:40px;margin-bottom:84px}
+  .sec-h{display:none;font:600 12px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ink);margin:0 0 18px;position:sticky;top:0;padding:16px 0;background:rgba(11,17,32,.82);backdrop-filter:blur(8px);z-index:2}
+  .sec-title{display:flex;align-items:baseline;gap:16px;margin:0 0 22px;font-size:30px;letter-spacing:-.025em;font-weight:700;color:var(--ink)}
+  .sec-title span{font:600 14px var(--mono);color:var(--accent);letter-spacing:.02em}
+  .sec-title::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,var(--line),transparent);align-self:center;margin-left:8px}
+  #about p{margin:0 0 16px;font-size:17px;color:#bcc7d8} #about p strong{color:var(--ink);font-weight:600}
+  .statement{margin:0!important;font-size:42px!important;line-height:1.14;letter-spacing:-.03em;font-weight:700;color:var(--ink)!important;max-width:20ch}
+  .statement em{font-style:normal;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .statement span{display:block;margin-top:14px;font-size:18px;letter-spacing:-.005em;font-weight:500;color:var(--ink-2);max-width:none}
+  .cta{margin-top:26px}
+
+  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:30px 0 4px}
+  .stat{border:1px solid var(--line);border-radius:14px;padding:14px 16px;background:var(--panel)}
+  .stat b{display:block;font-size:36px;letter-spacing:-.03em;color:var(--ink);font-weight:800;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .stat span{font-size:12.5px;color:var(--ink-3);line-height:1.35;display:block;margin-top:2px}
+
+  /* hover-focus list */
+  .list{display:grid;gap:6px}
+  .list:hover .entry{opacity:.45} .list .entry:hover{opacity:1}
+  .entry{position:relative;display:grid;grid-template-columns:118px 1fr;gap:22px;padding:18px 18px;margin:0 -18px;border-radius:14px;transition:opacity .25s,background .25s,box-shadow .25s,transform .25s}
+  .entry:hover{background:rgba(148,197,255,.05);box-shadow:inset 0 1px 0 rgba(255,255,255,.04),0 10px 30px -12px rgba(0,0,0,.6)}
+  .when{font:600 11.5px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3);padding-top:4px}
+  .entry h3{margin:0;color:var(--ink);font-size:19px;font-weight:650;letter-spacing:-.015em;line-height:1.3}
+  .entry h3 .arrow{display:inline-block;transition:transform .2s;margin-left:4px;color:var(--ink-3)}
+  .entry:hover h3{color:var(--accent)} .entry:hover h3 .arrow{transform:translate(3px,-3px);color:var(--accent)}
+  .entry .sub{color:var(--ink-3);font-size:14px;margin-top:2px}
+  .entry ul{margin:10px 0 0;padding-left:0;list-style:none;display:grid;gap:7px;font-size:15.5px;color:#bcc7d8}
+  .entry li{position:relative;padding-left:16px} .entry li::before{content:"";position:absolute;left:0;top:.62em;width:6px;height:6px;border-radius:2px;background:var(--accent);opacity:.7}
+  .entry li strong{color:var(--ink);font-weight:600}
+  .tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+  .tag{font:500 11.5px var(--mono);color:var(--accent);background:rgba(94,234,212,.09);border-radius:999px;padding:4px 10px}
+  .badge{display:inline-block;font:600 11px var(--mono);color:#fbbf24;background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.25);border-radius:6px;padding:2px 7px;margin-left:8px;vertical-align:2px}
+  .links{display:flex;gap:16px;margin-top:10px;font:600 13px var(--mono)} .links a{color:var(--ink)} .links a:hover{color:var(--accent)}
+  .stretch{position:absolute;inset:0;border-radius:14px;z-index:0} .entry > *{position:relative;z-index:1}
+
+  .skills{display:grid;gap:12px}
+  .skill{display:grid;grid-template-columns:118px 1fr;gap:22px;font-size:14.5px}
+  .skill .k{font:600 11.5px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3);padding-top:3px}
+  .chips{display:flex;flex-wrap:wrap;gap:6px}
+  .chips span{border:1px solid var(--line);border-radius:8px;padding:3px 9px;color:var(--ink);font-size:13.5px;background:rgba(255,255,255,.02);transition:border-color .2s,transform .2s}
+  .chips span:hover{border-color:rgba(94,234,212,.55);transform:translateY(-1px)}
+
+  .resume-link{display:inline-flex;align-items:center;gap:8px;margin-top:18px;font-weight:600;color:var(--ink);border-bottom:1px solid transparent}
+  .resume-link:hover{color:var(--accent);border-color:var(--accent)}
+  footer{font-size:13px;color:var(--ink-3);max-width:46ch}
+
+  /* reveal on scroll */
+  .reveal{opacity:0;transform:translateY(14px);transition:opacity .7s ease,transform .7s ease}
+  .reveal.in{opacity:1;transform:none}
+
+  @media (max-width:1000px){
+    .shell{grid-template-columns:1fr;gap:0;padding:0 24px}
+    .left{position:relative;height:auto;padding:64px 0 24px}
+    nav.toc{display:none} .socials{margin-top:28px}
+    .right{padding-top:8px}
+    .sec-h{display:block} .sec-title{display:none} .statement{font-size:30px!important}
+    h1{font-size:42px}
   }
-  /* Fixed background layer — color shifts via JS on scroll */
-  #bg{position:fixed;inset:0;z-index:-2;background:linear-gradient(165deg,#edf5fc 0%,#e2eefb 100%);transition:background .25s linear;}
-  #bg-orbs{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none;}
-  #bg-orbs i{position:absolute;display:block;border-radius:50%;filter:blur(50px);opacity:.5;}
-  .orb1{width:420px;height:420px;background:#bfe0f7;top:-120px;right:-80px;}
-  .orb2{width:360px;height:360px;background:#bff0dd;bottom:-100px;left:-90px;}
-  .orb3{width:300px;height:300px;background:#cfe9f5;top:45%;left:55%;}
-
-  a{color:var(--green-dark);text-decoration:none;}
-  a:hover{text-decoration:underline;}
-  .mono{font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace;}
-
-  nav{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.55);backdrop-filter:saturate(180%) blur(14px);border-bottom:1px solid var(--line);}
-  .nav-inner{max-width:var(--max);margin:0 auto;padding:14px 24px;display:flex;align-items:center;gap:24px;}
-  .nav-inner .brand{font-weight:600;letter-spacing:-.2px;color:var(--ink);}
-  .nav-links{margin-left:auto;display:flex;gap:22px;}
-  .nav-links a{color:var(--muted);font-size:14.5px;}
-  .nav-links a:hover{color:var(--ink);text-decoration:none;}
-
-  .wrap{max-width:var(--max);margin:0 auto;padding:0 24px;}
-  section{padding:22px 0;}
-  section .wrap{border-top:1px solid var(--line);padding-top:30px;}
-
-  h1{font-size:39px;line-height:1.12;letter-spacing:-.8px;margin:0 0 18px;max-width:18ch;position:relative;
-     background:linear-gradient(100deg,var(--blue-dark),var(--green-dark));-webkit-background-clip:text;background-clip:text;color:transparent;}
-  .seclabel{display:flex;align-items:center;gap:10px;margin:0 0 16px;}
-  .seclabel .dot{width:9px;height:9px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--green));}
-  .seclabel span{font-size:12px;text-transform:uppercase;letter-spacing:.13em;color:var(--muted);}
-  h3{font-size:18px;margin:0 0 2px;letter-spacing:-.2px;}
-  p{margin:0 0 12px;color:var(--ink-soft);}
-
-  .hero{position:relative;overflow:hidden;padding:44px 0 24px;}
-  .hero .wrap{border-top:none;padding-top:0;}
-  .hero .eyebrow{color:var(--blue-dark);font-weight:600;font-size:14px;margin-bottom:14px;position:relative;}
-  .hero h1{font-size:48px;max-width:none;margin-bottom:14px;}
-  .hero .tagline{font-size:19px;font-weight:600;color:var(--ink);max-width:60ch;margin:0 0 18px;position:relative;letter-spacing:-.3px;}
-  .hero .lead{font-size:17px;color:var(--ink-soft);max-width:50ch;margin:0 0 26px;position:relative;}
-  .hero-shapes{position:absolute;right:-6px;top:10px;width:170px;height:170px;pointer-events:none;}
-  .hero-actions{display:flex;gap:12px;flex-wrap:wrap;position:relative;}
-  .btn{display:inline-block;padding:11px 21px;border-radius:10px;font-size:15px;font-weight:600;transition:transform .15s ease,box-shadow .15s ease;}
-  .btn:hover{text-decoration:none;transform:translateY(-2px);}
-  .btn.primary{background:linear-gradient(100deg,var(--blue),var(--green));color:#fff;box-shadow:0 6px 18px rgba(31,120,140,.28);}
-  .btn.ghost{border:1px solid var(--line);color:var(--ink);background:rgba(255,255,255,.6);}
-
-  .item{margin-bottom:20px;}
-  .item:last-child{margin-bottom:0;}
-  .item-head{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;}
-  .item-head .role{color:var(--muted);font-size:14.5px;}
-  .item-head .date{color:var(--muted);font-size:13px;white-space:nowrap;}
-  .item ul{margin:7px 0 0;padding-left:20px;color:var(--ink-soft);}
-  .item li{margin-bottom:3px;}
-
-  .cards{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
-  .card{border:1px solid var(--line);border-radius:14px;padding:16px 18px;background:rgba(255,255,255,.62);backdrop-filter:blur(6px);transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease;}
-  .card:hover{transform:translateY(-4px);border-color:rgba(31,120,140,.35);box-shadow:0 10px 26px rgba(31,90,120,.13);}
-  .card h3{margin-bottom:8px;font-size:16.5px;}
-  .card p{font-size:14.5px;margin-bottom:10px;}
-  .tag{display:inline-block;font-size:11.5px;color:var(--green-dark);background:rgba(31,163,122,.12);border-radius:999px;padding:3px 11px;margin:0 5px 5px 0;}
-  .card-link{font-size:13.5px;font-weight:600;}
-
-  .skill-row{display:flex;gap:16px;margin-bottom:8px;flex-wrap:wrap;}
-  .skill-row .label{min-width:118px;font-weight:600;font-size:14px;color:var(--ink);}
-  .skill-row .vals{color:var(--ink-soft);font-size:15px;flex:1;}
-
-  .post{padding:18px 0;border-top:1px solid var(--line);}
-  .post:first-of-type{border-top:none;padding-top:0;}
-  .post .pdate{color:var(--muted);font-size:12.5px;}
-  .post h3{margin:4px 0 6px;font-size:17px;}
-  .post p{font-size:15px;margin:0;}
-  .note{font-size:14px;color:var(--muted);font-style:italic;margin-top:22px;}
-
-  .contact-links{display:flex;gap:24px;flex-wrap:wrap;font-size:16px;align-items:center;}
-  footer{padding:24px 0;text-align:center;color:var(--muted);font-size:13px;}
-
-  @media(max-width:640px){
-    h1{font-size:30px;}
-    body{font-size:16px;}
-    .cards{grid-template-columns:1fr;}
-    .nav-links{gap:15px;}
-    .nav-links a:nth-child(n+4){display:none;}
-    section{padding:16px 0;}
-    section .wrap{padding-top:24px;}
-    .hero-shapes{display:none;}
+  @media (max-width:560px){
+    .entry,.skill{grid-template-columns:1fr;gap:6px}
+    .stats{grid-template-columns:1fr 1fr}
+    .aurora{width:420px;height:420px}
   }
-  .facts{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:0 0 20px;max-width:none;position:relative;}
-  .fact{border:1px solid var(--line);border-radius:12px;padding:10px 12px;background:rgba(255,255,255,.62);}
-  .fact .k{font-size:11.5px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);}
-  .fact .v{font-weight:600;font-size:15px;color:var(--ink);line-height:1.35;margin-top:2px;}
-  .fact .s{font-size:13.5px;color:var(--ink-soft);}
-  .hero h1 .aka{font-weight:500;color:var(--muted);-webkit-text-fill-color:var(--muted);}
-  .item li strong{color:var(--ink);}
-  .item .tags{margin-top:10px;}
-  .cards .card:last-child:nth-child(odd){grid-column:1 / -1;}
-  @media(max-width:860px){.facts{grid-template-columns:1fr 1fr;}}
-  @media(max-width:520px){.facts{grid-template-columns:1fr;}}
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
 </style>
 </head>
 <body>
-<div id="bg"></div>
-<div id="bg-orbs"><i class="orb1"></i><i class="orb2"></i><i class="orb3"></i></div>
+<div class="aurora"></div><div id="spot"></div><div class="grain"></div>
 
-<nav>
-  <div class="nav-inner">
-    <span class="brand">Ningchen (Marissa) Ma</span>
-    <div class="nav-links">
-      <a href="#experience">Experience</a>
-      <a href="#education">Education</a>
-      <a href="#projects">Projects</a>
-      <a href="#leadership">Leadership</a>
-      <a href="#skills">Skills</a>
-      <a href="#contact">Contact</a>
-    </div>
-  </div>
-</nav>
-
-<header class="hero">
-  <div class="wrap">
-    <svg class="hero-shapes" viewBox="0 0 200 200" aria-hidden="true">
-      <circle cx="134" cy="62" r="56" fill="#cfe9f7"/>
-      <rect x="38" y="90" width="74" height="74" rx="18" fill="#cdefdf"/>
-      <circle cx="72" cy="50" r="16" fill="#2f8fd6"/>
-      <rect x="140" y="126" width="30" height="30" rx="9" fill="#1fa37a"/>
-    </svg>
-    <div class="eyebrow">M.S. Computer Science @ Yale · Former Amazon SDE</div>
+<div class="shell">
+  <aside class="left">
+    <div class="hello">Hi, I'm</div>
     <h1>Ningchen <span class="aka">(Marissa)</span> Ma</h1>
-    <p class="tagline">Software engineer with 3+ years at Amazon building production backend systems, APIs, and GenAI tools — now at Yale, focused on scalable systems and AI products that reach real customers.</p>
-
-    <div class="facts">
-      <div class="fact"><div class="k">Now</div><div class="v">M.S. CS, Yale University</div><div class="s">Sep 2026 – May 2027</div></div>
-      <div class="fact"><div class="k">Experience</div><div class="v">SDE, Amazon (PXT)</div><div class="s">Oct 2022 – Jun 2026</div></div>
-      <div class="fact"><div class="k">Undergrad</div><div class="v">B.S. CS (Honours), McGill</div><div class="s">First Class Honours · GPA 3.87/4.00</div></div>
-      <div class="fact"><div class="k">Core stack</div><div class="v">Python · Java · JavaScript · GraphQL</div><div class="s">AWS (Lambda, DynamoDB, CDK) · React · GenAI agents · MCP</div></div>
+    <div class="role">Software Engineer · M.S. CS @ Yale
+      <span class="typer">I build <b id="typed"></b><i></i></span>
     </div>
 
-    <div class="hero-actions">
-      <a class="btn primary" href="mailto:ningchen.ma@yale.edu">Email me</a>
-      <a class="btn ghost" href="Ningchen_Marissa_Ma_CV.pdf" target="_blank" rel="noopener">Download CV (PDF)</a>
-      <a class="btn ghost" href="https://www.linkedin.com/in/ningchen-marissa-ma-7b6908222/" target="_blank" rel="noopener">LinkedIn</a>
-      <a class="btn ghost" href="https://github.com/NingchenMa" target="_blank" rel="noopener">GitHub</a>
+    <nav class="toc" id="toc">
+      <a href="#about">About</a><a href="#experience">Experience</a><a href="#education">Education</a><a href="#projects">Projects</a><a href="#research">Research</a><a href="#skills">Skills</a>
+    </nav>
+
+
+    <div class="socials">
+      <a href="https://github.com/NingchenMa" target="_blank" rel="noopener" aria-label="GitHub"><svg viewBox="0 0 24 24"><path d="M12 .5a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2.2c-3.3.7-4-1.4-4-1.4-.6-1.4-1.4-1.8-1.4-1.8-1.1-.8.1-.8.1-.8 1.2.1 1.9 1.3 1.9 1.3 1.1 1.9 2.9 1.3 3.6 1 .1-.8.4-1.3.8-1.6-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0c2.3-1.5 3.3-1.2 3.3-1.2.7 1.7.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .5z"/></svg></a>
+      <a href="https://www.linkedin.com/in/ningchen-marissa-ma-7b6908222/" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M20.4 20.5h-3.6v-5.6c0-1.3 0-3-1.8-3s-2.1 1.4-2.1 2.9v5.7H9.4V9h3.4v1.6h.1c.5-.9 1.6-1.8 3.4-1.8 3.6 0 4.2 2.4 4.2 5.4v6.3zM5.3 7.4a2.1 2.1 0 1 1 0-4.2 2.1 2.1 0 0 1 0 4.2zM7.1 20.5H3.6V9h3.5v11.5zM22.2 0H1.8C.8 0 0 .8 0 1.7v20.6c0 .9.8 1.7 1.8 1.7h20.4c1 0 1.8-.8 1.8-1.7V1.7C24 .8 23.2 0 22.2 0z"/></svg></a>
+      <a href="mailto:ningchen.ma@yale.edu" aria-label="Email"><svg viewBox="0 0 24 24"><path d="M2 5.5A2.5 2.5 0 0 1 4.5 3h15A2.5 2.5 0 0 1 22 5.5v13a2.5 2.5 0 0 1-2.5 2.5h-15A2.5 2.5 0 0 1 2 18.5v-13zm2.2.3 7.8 6.1 7.8-6.1H4.2zM20 7.6l-7.4 5.8a1 1 0 0 1-1.2 0L4 7.6v10.9c0 .3.2.5.5.5h15c.3 0 .5-.2.5-.5V7.6z"/></svg></a>
+      <a class="resume-mini" href="Ningchen_Marissa_Ma_CV.pdf" target="_blank" rel="noopener">Resume ↗</a>
     </div>
-  </div>
-</header>
+  </aside>
 
-<section id="experience">
-  <div class="wrap reveal">
-    <div class="seclabel"><span class="dot"></span><span>Work experience</span></div>
-
-    <div class="item">
-      <div class="item-head">
-        <div><h3>Amazon</h3><div class="role">Software Development Engineer (SDE) · People eXperience &amp; Technology (PXT)</div></div>
-        <div class="date">Oct 2022 – Jun 2026 · Vancouver, Canada</div>
+  <main class="right">
+    <section id="about">
+      <h2 class="sec-h">About</h2>
+      <p class="statement reveal">I build <em>backend systems</em> and <em>AI products</em> that reach real customers.<span>4 years at Amazon, now an M.S. in Computer Science at Yale.</span></p>
+      <div class="cta reveal">
+        <a class="btn primary" href="mailto:ningchen.ma@yale.edu">Email me</a>
+        <a class="btn" href="Ningchen_Marissa_Ma_CV.pdf" target="_blank" rel="noopener">Resume ↗</a>
+        <a class="btn" href="https://www.linkedin.com/in/ningchen-marissa-ma-7b6908222/" target="_blank" rel="noopener">LinkedIn ↗</a>
       </div>
-      <ul>
-        <li><strong>Backend lead</strong> for an enterprise-scale workforce planning system, owning APIs, data modeling, testing, deployment, and operations, used by senior leaders for headcount and budget decisions.</li>
-        <li><strong>Cross-functional partner:</strong> worked with product managers, technical program managers, UX designers, and senior leaders, communicating proactively to keep the product aligned with customer needs.</li>
-        <li><strong>40+ GraphQL APIs</strong> designed for comparing staffing and financial impact across planning scenarios.</li>
-        <li><strong>Workforce modeling &amp; DynamoDB services:</strong> built hiring, attrition, and promotion models backed by scalable DynamoDB services for organizational planning calculations.</li>
-        <li><strong>High-performance validation algorithm:</strong> designed a tree-based validation algorithm that blocked invalid workforce data before reaching financial planning, preventing duplicate and missing employee assignments from propagating into headcount and budget calculations. Replaced O(n) employee scans with O(p log p) checks over p selected entries; a 90,000-employee example required ~3,000× fewer database reads (~30 reads vs. ~90,000).</li>
-        <li><strong>GenAI analytics assistant &amp; MCP:</strong> built a natural-language GenAI analytics assistant and remote MCP server end-to-end, cutting manual data exploration from tens of minutes to seconds.</li>
-        <li><strong>React frontend:</strong> developed user-facing workflows across multiple internal HR products.</li>
-      </ul>
-      <div class="tags"><span class="tag">GraphQL</span><span class="tag">DynamoDB</span><span class="tag">AWS (CDK, Lambda, AppSync)</span><span class="tag">GenAI / MCP</span><span class="tag">React</span><span class="tag">Algorithm Optimization</span></div>
-    </div>
-  </div>
-</section>
-
-<section id="research">
-  <div class="wrap reveal">
-    <div class="seclabel"><span class="dot"></span><span>Research &amp; teaching · McGill University</span></div>
-
-    <div class="item">
-      <div class="item-head">
-        <div><h3>Research Assistant, Shir Group (Compilers)</h3><div class="role">Dr. Jonathan Van der Cruysse &amp; Prof. Christophe Dubach</div></div>
-        <div class="date">May 2022 – Sep 2022</div>
+      <div class="reveal" style="margin-top:34px">
+        <p>I'm a software engineer who likes owning things end to end. At <strong>Amazon</strong>, I led backend development for an enterprise-scale workforce planning system used by senior leaders for headcount and budget decisions — APIs, data models, testing, deployment, and operations.</p>
+        <p>I also built a <strong>GenAI analytics assistant and remote MCP server</strong> that turned tens of minutes of manual data exploration into seconds. Now I'm doing an <strong>M.S. in Computer Science at Yale</strong>, going deeper on deep learning, hardware accelerators, and large-scale systems — and building AI products on the side, like <strong>Torchbearer</strong>, which placed 3rd at Hack Nation.</p>
       </div>
-      <ul>
-        <li>Researched compiler optimization using <strong>equality saturation</strong> and intermediate representation (IR) selection.</li>
-        <li>Built an <strong>IR-to-Swift code generator</strong> that runs fully connected layers on the <strong>Apple M1 neural accelerator</strong> via MLCompute.</li>
-      </ul>
-    </div>
+    </section>
 
-    <div class="item">
-      <div class="item-head">
-        <div><h3>Research Assistant, ANRL Cloud Computing / IoT Group</h3><div class="role">Prof. Muthucumaru Maheswaran</div></div>
-        <div class="date">Jan 2022 – Apr 2022</div>
-      </div>
-      <ul>
-        <li>Optimized <strong>MQTT communication</strong> on ESP32 devices running RIOT OS for edge computing.</li>
-        <li>Deployed RIOT OS to ESP32 and wrote standard operating procedures that other researchers used to extend the protocol.</li>
-      </ul>
-    </div>
-
-    <div class="item">
-      <div class="item-head">
-        <div><h3>Teaching Assistant, Functional Programming (COMP 302)</h3><div class="role">Dept. of Computer Science</div></div>
-        <div class="date">Jan 2022 – Apr 2022</div>
-      </div>
-      <ul>
-        <li>Weekly office hours for <strong>50+ students</strong>; helped design assignments and graded assignments and exams.</li>
-      </ul>
-    </div>
-  </div>
-</section>
-
-<section id="education">
-  <div class="wrap reveal">
-    <div class="seclabel"><span class="dot"></span><span>Education</span></div>
-
-    <div class="item">
-      <div class="item-head">
-        <div><h3>Yale University</h3><div class="role">M.S. in Computer Science (Expected)</div></div>
-        <div class="date">Sep 2026 – May 2027 · New Haven, CT</div>
-      </div>
-      <ul><li>Relevant coursework: Advanced Deep Learning, FPGA Design, Silicon Compilation, Big Data Systems</li></ul>
-    </div>
-
-    <div class="item">
-      <div class="item-head">
-        <div><h3>McGill University</h3><div class="role">B.S. in Computer Science (Honours) · First Class Honours · GPA 3.87/4.00</div></div>
-        <div class="date">Sep 2017 – Jun 2022 · Montreal, Canada</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="projects">
-  <div class="wrap reveal">
-    <div class="seclabel"><span class="dot"></span><span>Projects</span></div>
-    <div class="cards">
-      <div class="card">
-        <div style="display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-bottom:6px;flex-wrap:wrap;">
-          <h3>Torchbearer</h3>
-          <span style="font-size:12px;font-weight:600;color:var(--blue-dark);background:rgba(47,143,214,.12);border-radius:6px;padding:2px 8px;">🏆 Hack Nation 3rd Place</span>
+    <section id="experience">
+      <h2 class="sec-h">Experience</h2>
+      <h2 class="sec-title reveal"><span>01</span>Experience</h2>
+      <div class="list">
+        <div class="entry reveal">
+          <div class="when">Oct 2022 — Jun 2026</div>
+          <div>
+            <h3>Software Development Engineer · Amazon <span class="arrow">↗</span></h3>
+            <div class="sub">People eXperience &amp; Technology (PXT) · Vancouver, Canada</div>
+            <ul>
+              <li><strong>Backend lead</strong> for an enterprise-scale workforce planning system: APIs, data modeling, testing, deployment, and operations.</li>
+              <li>Designed <strong>40+ GraphQL APIs</strong> for comparing staffing and financial impact across planning scenarios.</li>
+              <li>Designed an employee-assignment validation algorithm that <strong>prevented inaccurate financial projections</strong>, replacing O(n) scans with O(p log p) checks — <strong>~3,000× fewer database reads</strong> across 90,000 employees.</li>
+              <li>Built hiring, attrition, and promotion models on scalable <strong>DynamoDB</strong> services.</li>
+              <li>Built a <strong>GenAI analytics assistant and remote MCP server</strong> end to end, cutting data exploration from minutes to seconds.</li>
+              <li>Partnered with product managers, program managers, UX designers, and senior leaders; built <strong>React</strong> workflows across internal HR products.</li>
+            </ul>
+            <div class="tags"><span class="tag">GraphQL</span><span class="tag">DynamoDB</span><span class="tag">AWS CDK · Lambda · AppSync</span><span class="tag">GenAI · MCP</span><span class="tag">React</span></div>
+          </div>
         </div>
-        <p>A voice-assisted tool that turns expert reasoning into interactive work maps and step-by-step guidance for new hires. I built the frontend UI and UX workflows, a custom ElevenLabs voice agent, and deployed all infrastructure on AWS; I also set the team's timeline and ran customer interviews (Oct 2026).</p>
-        <div><span class="tag">Voice AI</span><span class="tag">ElevenLabs</span><span class="tag">AWS</span><span class="tag">Frontend</span><span class="tag">Customer interviews</span></div>
-        <div style="display:flex;gap:16px;flex-wrap:wrap"><a class="card-link" href="https://main.d3dd61qwuyekg8.amplifyapp.com/" target="_blank" rel="noopener">Live demo →</a><a class="card-link" href="https://github.com/NingchenMa/Torchbearer" target="_blank" rel="noopener">GitHub →</a></div>
+        <div class="entry reveal">
+          <div class="when">Jun 2026 — Oct 2026</div>
+          <div>
+            <h3>Team Leader · Venture Capital Scout Program</h3>
+            <div class="sub">Six-member scout team</div>
+            <ul>
+              <li>Led a <strong>six-member team</strong> through a full startup evaluation and presented the recommendation to the fund's investment reviewers.</li>
+              <li>Met founders to evaluate product, market, funding plan, and intellectual property; gathered input from multiple investors.</li>
+              <li>Ran weekly check-ins, assigned section owners, and organized in-person meetups.</li>
+            </ul>
+            <div class="tags"><span class="tag">Leadership</span><span class="tag">Venture capital</span><span class="tag">Founder interviews</span></div>
+          </div>
+        </div>
       </div>
-      <div class="card">
-        <h3>PyTorch DDP: Bucketing &amp; Overlap, Visualized</h3>
-        <p>An interactive demo of how PyTorch Distributed Data Parallel groups gradients into buckets and overlaps communication with the backward pass, with the accompanying talk slides (Big Data Systems, Yale).</p>
-        <div><span class="tag">Distributed training</span><span class="tag">PyTorch</span><span class="tag">Interactive demo</span></div>
-        <div style="display:flex;gap:16px;flex-wrap:wrap"><a class="card-link" href="https://ningchenma.github.io/DDP-overlap-demo/" target="_blank" rel="noopener">Open demo →</a><a class="card-link" href="https://github.com/NingchenMa/DDP-overlap-demo" target="_blank" rel="noopener">GitHub →</a></div>
-      </div>
-      <div class="card">
-        <h3>Somewhere</h3>
-        <p>Write what you feel and meet a real public-domain quote that already felt it — a thought, met across time. A single-file web app.</p>
-        <div><span class="tag">Web app</span><span class="tag">Product</span><span class="tag">UI/UX</span></div>
-        <div><a class="card-link" href="https://ningchenma.github.io/somewhere/" target="_blank" rel="noopener">Try it →</a></div>
-      </div>
-      <div class="card">
-        <h3>Loop: AI Coding-Agent Workspace</h3>
-        <p>A workspace where you write a goal and an AI agent gathers team context and does the work. Successful approaches become reusable skills and shared team memory.</p>
-        <div><span class="tag">AI Agents</span><span class="tag">Product</span><span class="tag">UI/UX</span></div>
-        <div><a class="card-link" href="loop-app.html">View prototype →</a></div>
-      </div>
-      <div class="card">
-        <h3>Mini Compiler</h3>
-        <p>A Java compiler for a C-like language: lexer, parser to AST, assembly code generation with Chaitin register allocation, and dead-code elimination.</p>
-        <div><span class="tag">Java</span><span class="tag">Compilers</span></div>
-      </div>
-      <div class="card">
-        <h3>Mini Operating System</h3>
-        <p>A UNIX-style OS in C with a shell, round-robin CPU scheduler, Process Control Blocks, and memory management.</p>
-        <div><span class="tag">C</span><span class="tag">Operating Systems</span></div>
-        <div><a class="card-link" href="https://github.com/NingchenMa/Mini-Operating-System" target="_blank" rel="noopener">View on GitHub →</a></div>
-      </div>
-    </div>
-  </div>
-</section>
+      <a class="resume-link reveal" href="Ningchen_Marissa_Ma_CV.pdf" target="_blank" rel="noopener">View full resume ↗</a>
+    </section>
 
-<section id="leadership">
-  <div class="wrap reveal">
-    <div class="seclabel"><span class="dot"></span><span>Leadership</span></div>
-    <div class="item">
-      <div class="item-head">
-        <div><h3>Team Leader, Venture Capital Scout Program</h3><div class="role">Six-member scout team</div></div>
-        <div class="date">Jun 2026 – Oct 2026</div>
+    <section id="education">
+      <h2 class="sec-h">Education</h2>
+      <h2 class="sec-title reveal"><span>02</span>Education</h2>
+      <div class="list">
+        <div class="entry reveal">
+          <div class="when">2026 — 2027</div>
+          <div><h3>Yale University · M.S. Computer Science</h3><div class="sub">New Haven, CT · Expected May 2027 · Graduate School of Arts and Sciences</div>
+            <div class="tags"><span class="tag">Advanced Deep Learning</span><span class="tag">FPGA Design</span><span class="tag">Silicon Compilation</span><span class="tag">Big Data Systems</span></div></div>
+        </div>
+        <div class="entry reveal">
+          <div class="when">2017 — 2022</div>
+          <div><h3>McGill University · B.S. Computer Science (Honours)</h3><div class="sub">Montreal, Canada · First Class Honours · GPA 3.87 / 4.00</div></div>
+        </div>
       </div>
-      <ul>
-        <li>Led a <strong>six-member scout team</strong> through a full startup evaluation and presented the recommendation to the fund's investment reviewers.</li>
-        <li>Met founders to evaluate product, market, funding plan, and intellectual property; gathered input from multiple investors to select the final startup.</li>
-        <li>Ran weekly check-ins, assigned section owners, and organized in-person team meetups, keeping every member involved.</li>
-      </ul>
-    </div>
-  </div>
-</section>
+    </section>
 
-<section id="skills">
-  <div class="wrap reveal">
-    <div class="seclabel"><span class="dot"></span><span>Skills</span></div>
-    <div class="skill-row"><div class="label">Programming</div><div class="vals">Python, Java, JavaScript, C/C++, Scala, OCaml, MIPS Assembly, Bash, HTML/CSS, PHP</div></div>
-    <div class="skill-row"><div class="label">Web &amp; APIs</div><div class="vals">React, GraphQL, REST APIs</div></div>
-    <div class="skill-row"><div class="label">AI &amp; GenAI</div><div class="vals">GenAI agents, Model Context Protocol (MCP), voice agents (ElevenLabs), AI-assisted development</div></div>
-    <div class="skill-row"><div class="label">Cloud &amp; AWS</div><div class="vals">Lambda, DynamoDB, AppSync, S3, CDK, CloudWatch, API Gateway, OpenSearch, ECS, Route 53, VPC</div></div>
-    <div class="skill-row"><div class="label">Collaboration</div><div class="vals">Cross-functional partnership (product, program management, UX, leadership), stakeholder communication</div></div>
-    <div class="skill-row"><div class="label">Interests</div><div class="vals">Distributed systems, AI agents, compilers, hardware accelerators, high-performance systems</div></div>
-  </div>
-</section>
+    <section id="projects">
+      <h2 class="sec-h">Projects</h2>
+      <h2 class="sec-title reveal"><span>03</span>Projects</h2>
+      <div class="list">
+        <div class="entry reveal">
+          <div class="when">Oct 2026</div>
+          <div>
+            <a class="stretch" href="https://main.d3dd61qwuyekg8.amplifyapp.com/" target="_blank" rel="noopener" aria-label="Torchbearer live demo"></a>
+            <h3>Torchbearer <span class="arrow">↗</span><span class="badge">🏆 Hack Nation 3rd</span></h3>
+            <p style="margin:6px 0 0;font-size:15.5px;color:#bcc7d8">A voice-assisted tool that turns expert reasoning into interactive work maps and step-by-step guidance for new hires. I built the frontend UI and workflows, a custom ElevenLabs voice agent, and all AWS infrastructure — and ran the customer interviews.</p>
+            <div class="tags"><span class="tag">Voice AI</span><span class="tag">ElevenLabs</span><span class="tag">AWS</span><span class="tag">Frontend</span></div>
+            <div class="links"><a href="https://main.d3dd61qwuyekg8.amplifyapp.com/" target="_blank" rel="noopener">Live demo ↗</a><a href="https://github.com/NingchenMa/Torchbearer" target="_blank" rel="noopener">GitHub ↗</a></div>
+          </div>
+        </div>
+        <div class="entry reveal">
+          <div class="when">Nov 2026</div>
+          <div>
+            <a class="stretch" href="https://ningchenma.github.io/DDP-overlap-demo/" target="_blank" rel="noopener" aria-label="DDP demo"></a>
+            <h3>PyTorch DDP, Visualized <span class="arrow">↗</span></h3>
+            <p style="margin:6px 0 0;font-size:15.5px;color:#bcc7d8">An interactive demo of how PyTorch Distributed Data Parallel buckets gradients and overlaps communication with the backward pass, with the talk slides I gave in Big Data Systems at Yale.</p>
+            <div class="tags"><span class="tag">Distributed training</span><span class="tag">PyTorch</span><span class="tag">Interactive</span></div>
+            <div class="links"><a href="https://ningchenma.github.io/DDP-overlap-demo/" target="_blank" rel="noopener">Open demo ↗</a><a href="https://github.com/NingchenMa/DDP-overlap-demo" target="_blank" rel="noopener">GitHub ↗</a></div>
+          </div>
+        </div>
+        <div class="entry reveal">
+          <div class="when">2026</div>
+          <div>
+            <a class="stretch" href="loop-app.html" aria-label="Loop prototype"></a>
+            <h3>Loop · AI coding-agent workspace <span class="arrow">↗</span></h3>
+            <p style="margin:6px 0 0;font-size:15.5px;color:#bcc7d8">Write a goal; an AI agent gathers team context and does the work. Successful approaches become reusable skills and shared team memory.</p>
+            <div class="tags"><span class="tag">AI agents</span><span class="tag">Product</span><span class="tag">UI/UX</span></div>
+          </div>
+        </div>
+        <div class="entry reveal">
+          <div class="when">2026</div>
+          <div>
+            <a class="stretch" href="https://ningchenma.github.io/somewhere/" target="_blank" rel="noopener" aria-label="Somewhere"></a>
+            <h3>Somewhere <span class="arrow">↗</span></h3>
+            <p style="margin:6px 0 0;font-size:15.5px;color:#bcc7d8">Write what you feel and meet a real public-domain quote that already felt it — a thought, met across time.</p>
+            <div class="tags"><span class="tag">Web app</span><span class="tag">Product</span></div>
+          </div>
+        </div>
+        <div class="entry reveal">
+          <div class="when">McGill</div>
+          <div>
+            <a class="stretch" href="https://github.com/NingchenMa/Mini-Operating-System" target="_blank" rel="noopener" aria-label="Mini OS"></a>
+            <h3>Mini Compiler &amp; Mini Operating System <span class="arrow">↗</span></h3>
+            <p style="margin:6px 0 0;font-size:15.5px;color:#bcc7d8">A Java compiler for a C-like language (parser, AST, code generation, Chaitin register allocation, dead-code elimination) and a UNIX-style OS in C with a shell, round-robin scheduler, and memory management.</p>
+            <div class="tags"><span class="tag">Java</span><span class="tag">C</span><span class="tag">Compilers</span><span class="tag">Operating systems</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-<section id="contact">
-  <div class="wrap reveal">
-    <div class="seclabel"><span class="dot"></span><span>Contact</span></div>
-    <div class="contact-links">
-      <a href="mailto:ningchen.ma@yale.edu">ningchen.ma@yale.edu</a>
-      <a href="tel:+14385307810">(+1) 438-530-7810</a>
-      <a href="https://www.linkedin.com/in/ningchen-marissa-ma-7b6908222/" target="_blank" rel="noopener">LinkedIn</a>
-      <a href="https://github.com/NingchenMa" target="_blank" rel="noopener">GitHub</a>
-      <a href="Ningchen_Marissa_Ma_CV.pdf" target="_blank" rel="noopener">CV (PDF)</a>
-      <span class="mono" style="color:var(--muted)">New Haven, CT</span>
-    </div>
-  </div>
-</section>
+    <section id="research">
+      <h2 class="sec-h">Research &amp; Teaching</h2>
+      <h2 class="sec-title reveal"><span>04</span>Research &amp; Teaching</h2>
+      <div class="list">
+        <div class="entry reveal">
+          <div class="when">May — Sep 2022</div>
+          <div><h3>Research Assistant · Shir Group (Compilers), McGill</h3><div class="sub">Dr. Jonathan Van der Cruysse &amp; Prof. Christophe Dubach</div>
+            <ul><li>Compiler optimization with <strong>equality saturation</strong> and intermediate representation selection.</li><li>Built an <strong>IR-to-Swift code generator</strong> running fully connected layers on the <strong>Apple M1 neural accelerator</strong> via MLCompute.</li></ul></div>
+        </div>
+        <div class="entry reveal">
+          <div class="when">Jan — Apr 2022</div>
+          <div><h3>Research Assistant · Cloud / IoT Group, McGill</h3><div class="sub">Prof. Muthucumaru Maheswaran</div>
+            <ul><li>Optimized <strong>MQTT communication</strong> on ESP32 devices running RIOT OS for edge computing; wrote procedures other researchers used to extend the protocol.</li></ul></div>
+        </div>
+        <div class="entry reveal">
+          <div class="when">Jan — Apr 2022</div>
+          <div><h3>Teaching Assistant · Functional Programming (COMP 302)</h3><div class="sub">McGill Computer Science</div>
+            <ul><li>Weekly office hours for <strong>50+ students</strong>; helped design and grade assignments and exams.</li></ul></div>
+        </div>
+      </div>
+    </section>
 
-<footer>© <span id="yr"></span> Ningchen (Marissa) Ma</footer>
+
+    <section id="skills">
+      <h2 class="sec-h">Skills</h2>
+      <h2 class="sec-title reveal"><span>05</span>Skills</h2>
+      <div class="skills reveal">
+        <div class="skill"><div class="k">Languages</div><div class="chips"><span>Python</span><span>Java</span><span>JavaScript</span><span>C/C++</span><span>Scala</span><span>OCaml</span><span>MIPS Assembly</span><span>Bash</span><span>HTML/CSS</span><span>PHP</span></div></div>
+        <div class="skill"><div class="k">Web &amp; APIs</div><div class="chips"><span>React</span><span>GraphQL</span><span>REST APIs</span></div></div>
+        <div class="skill"><div class="k">AI</div><div class="chips"><span>GenAI agents</span><span>Model Context Protocol</span><span>Voice agents (ElevenLabs)</span><span>AI-assisted development</span></div></div>
+        <div class="skill"><div class="k">Cloud</div><div class="chips"><span>Lambda</span><span>DynamoDB</span><span>AppSync</span><span>S3</span><span>CDK</span><span>CloudWatch</span><span>API Gateway</span><span>OpenSearch</span><span>ECS</span></div></div>
+      </div>
+    </section>
+
+    <footer class="reveal">Designed and built by Ningchen (Marissa) Ma. Plain HTML, CSS and a little JavaScript, hosted on GitHub Pages. © <span id="yr"></span></footer>
+  </main>
+</div>
 
 <script>
-  document.getElementById('yr').textContent=new Date().getFullYear();
+  document.getElementById("yr").textContent = new Date().getFullYear();
+  // Cursor spotlight
+  const spot = document.getElementById("spot");
+  addEventListener("pointermove", (e) => { spot.style.setProperty("--x", e.clientX + "px"); spot.style.setProperty("--y", e.clientY + "px"); }, { passive: true });
 
-  // Background color shifts from blue (top) to green (bottom) as you scroll.
-  var bg=document.getElementById('bg');
-  // top stop  blue -> green ;  bottom stop  blue -> green
-  var topA=[237,245,252], topB=[236,249,241];
-  var botA=[226,238,251], botB=[222,243,233];
-  function mix(a,b,t){return 'rgb('+Math.round(a[0]+(b[0]-a[0])*t)+','+Math.round(a[1]+(b[1]-a[1])*t)+','+Math.round(a[2]+(b[2]-a[2])*t)+')';}
-  function onScroll(){
-    var max=document.body.scrollHeight-window.innerHeight;
-    var t=max>0?Math.min(1,Math.max(0,window.scrollY/max)):0;
-    bg.style.background='linear-gradient(165deg,'+mix(topA,topB,t)+' 0%,'+mix(botA,botB,t)+' 100%)';
-  }
-  window.addEventListener('scroll',onScroll,{passive:true});
-  window.addEventListener('resize',onScroll);
-  onScroll();
+  // Typing effect
+  const words = ["backend systems that scale.", "AI agents people actually use.", "distributed systems.", "tools with real customers."];
+  const el = document.getElementById("typed"); let w = 0, i = 0, del = false;
+  (function tick() {
+    const word = words[w];
+    el.textContent = word.slice(0, i);
+    if (!del && i < word.length) i++; else if (del && i > 0) i--; else if (!del) { del = true; return setTimeout(tick, 1600); } else { del = false; w = (w + 1) % words.length; }
+    setTimeout(tick, del ? 28 : 55);
+  })();
+
+  // Reveal on scroll + count-up numbers
+  const fmt = (n) => n.toLocaleString("en-US");
+  const io = new IntersectionObserver((es) => es.forEach((e) => {
+    if (!e.isIntersecting) return;
+    e.target.classList.add("in"); io.unobserve(e.target);
+    e.target.querySelectorAll("[data-count]").forEach((b) => {
+      const to = +b.dataset.count, pre = b.dataset.prefix || "", suf = b.dataset.suffix || "", t0 = performance.now();
+      const step = (t) => { const p = Math.min(1, (t - t0) / 1400), v = Math.round(to * (1 - Math.pow(1 - p, 3))); b.textContent = pre + fmt(v) + suf; if (p < 1) requestAnimationFrame(step); };
+      requestAnimationFrame(step);
+    });
+  }), { threshold: 0.15 });
+  document.querySelectorAll(".reveal").forEach((n) => io.observe(n));
+
+  // Scroll-spy for the left menu
+  const links = [...document.querySelectorAll("#toc a")];
+  const spy = new IntersectionObserver((es) => es.forEach((e) => {
+    if (e.isIntersecting) links.forEach((a) => a.classList.toggle("on", a.getAttribute("href") === "#" + e.target.id));
+  }), { rootMargin: "-40% 0px -55% 0px" });
+  document.querySelectorAll("main section").forEach((s) => spy.observe(s));
 </script>
 </body>
 </html>
